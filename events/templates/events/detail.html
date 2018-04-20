@@ -1,0 +1,29 @@
+{% extends 'events/base.html' %}
+  {% block content %}
+    <h1>{{ event.name }}</h1>
+    <h3>{{ event.details }}</h3>
+    <div>
+      <a href="{% url 'events:event-delete' event.id %}">Delete</a>
+    </div>
+    <div>
+      <a href="{% url 'events:event-update' event.id %}">Update</a>
+    </div>
+
+    <div>
+      {% for comment in comments %}
+        <p>{{ user }}: {{ comment.post}}</p>
+
+      {%  endfor %}
+
+    </div>
+
+    <div>
+      <form method="post"> {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add comment</button>
+      </form>
+
+
+    </div>
+
+  {% endblock %}
