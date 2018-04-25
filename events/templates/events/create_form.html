@@ -1,9 +1,14 @@
 {% extends 'events/base.html' %}
+{% load crispy_forms_filters %}
+
+
   {% block content %}
+      <div class="mx-auto w-75">
           <form method="post" > {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit"> Create</button>
+            {{ form|crispy }}
+            <button class="mx-auto btn btn-primary btn active w-25" type="submit"> Create</button>
           </form>
+      </div>
 
 
   {% endblock %}

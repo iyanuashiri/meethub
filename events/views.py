@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.models import User
 
 from .models import Event
 from .forms import CommentForm
@@ -21,7 +22,7 @@ class EventList(LoginRequiredMixin, generic.ListView):
         if self.request.user.is_superuser:
             return Event.objects.all()
         else:
-            return Event.objects.filter(creator=self.request.user)
+            return Event.objects.all()
 
 
 def event_detail(request, pk):
@@ -29,6 +30,8 @@ def event_detail(request, pk):
     event = get_object_or_404(Event, pk=pk)
 
     comments = event.comments.all()
+
+    attending = event.attendees.all()
 
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -38,11 +41,13 @@ def event_detail(request, pk):
             new_comment.created_by = request.user
             new_comment.save()
             messages.success(request, 'Comment was created successfully')
-            return redirect('meet:event-detail', pk=event.pk)
+            return redirect('events:event-detail', pk=event.pk)
     else:
         form = CommentForm()
 
-    return render(request, 'events/detail.html', {'event': event, 'comments': comments, 'form': form})
+    return render(request, 'events/detail.html', {'event': event, 'comments': comments,
+                                                  'form': form, 'attending': attending,
+                                                  })
 
 
 class EventFormMixin(object):
@@ -70,6 +75,17 @@ class EventUpdate(LoginRequiredMixin, SuccessMessageMixin, EventFormMixin, gener
 class EventDelete(LoginRequiredMixin, SuccessMessageMixin, generic.DeleteView):
     model = Event
     template_name = 'events/delete.html'
-    success_url = reverse_lazy('event-list')
+    success_url = reverse_lazy('events:event-list')
     context_object_name = 'event'
     success_message = "%(name)s was deleted successfully"
+
+
+def attend_event(request, event_id):
+    event = get_object_or_404(Event, pk=event_id)
+    attendee = User.objects.get(username=request.user)
+
+    event.attendees.add(attendee)
+    event.count_attendees()
+    messages.success(request, 'You are now attending {0}'.format(event.name))
+
+    return redirect('events:event-detail', pk=event.pk)

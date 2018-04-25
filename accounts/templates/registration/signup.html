@@ -1,9 +1,13 @@
 {% extends 'registration/base.html' %}
+{% load crispy_forms_filters %}
+
 {% block title %}Sign Up{% endblock %}
     {% block content %}
-            <h2>Sign up</h2>
-            <form method="post">{% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Sign up</button>
-            </form>
+            <h2 class="w-50 mx-auto">Sign up</h2>
+            <div class="mx-auto w-50">
+                <form class="mx-auto w-50" method="post">{% csrf_token %}
+                    {{ form|crispy }}
+                    <button class="btn btn-primary btn active w-25" type="submit">Sign up</button>
+                </form>
+            </div>
     {% endblock %}

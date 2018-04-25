@@ -1,7 +1,8 @@
 {% extends 'registration/base.html' %}
-    {% block content %}
-        <h1>You have been logged out of this site</h1>
 
-        <a href="{% url 'login' %}">Click here to login</a>
+    {% block content %}
+        <h1 class="">You have been logged out of this site</h1>
+
+        <a class="text-info" href="{% url 'login' %}">Click here to login</a>
 
     {% endblock %}

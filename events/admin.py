@@ -25,9 +25,9 @@ admin.site.register(Event, EventAdmin)
 
 class CommentAdmin(admin.ModelAdmin):
 
-    list_display = ('post', 'created_date', 'created_time')
-    fields = ('event', 'post', 'created_by')
-    search_fields = ('post',)
+    list_display = ('comment', 'created_date', 'created_time')
+    fields = ('event', 'comment', 'created_by')
+    search_fields = ('comment',)
 
 
 admin.site.register(Comment, CommentAdmin)

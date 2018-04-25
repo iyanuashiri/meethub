@@ -1,22 +1,27 @@
 {% extends "registration/base.html" %}
+{% load crispy_forms_filters %}
 
 {% block content %}
+<div class="mx-auto w-50">
 
 {% if form.errors %}
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
 
 {% if next %}
+    <div class="mx-auto w-50">
     {% if user.is_authenticated %}
     <p>Your account doesn't have access to this page. To proceed,
     please login with an account that has access.</p>
     {% else %}
     <p>Please login to see this page.</p>
     {% endif %}
+    </div>
 {% endif %}
 
-<form method="post" action="{% url 'login' %}">
+<form class="mx-auto w-50" method="post" action="{% url 'login' %}">
 {% csrf_token %}
+{% comment %}
 <table>
 <tr>
     <td>{{ form.username.label_tag }}</td>
@@ -28,11 +33,14 @@
 </tr>
 </table>
 
+{% endcomment %}
+    {{ form|crispy }}
+
 <input type="submit" value="login" />
 <input type="hidden" name="next" value="{{ next }}" />
 </form>
 
-<div>
+<div class="mx-auto w-50">
     <a class="waves-effect waves-light btn" href="{% url 'signup' %}">Signup</a>
 </div>
 
@@ -43,3 +51,4 @@
 <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
 {% endcomment %}
 {% endblock %}
+</div>

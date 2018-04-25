@@ -7,12 +7,14 @@ class EventForm(forms.ModelForm):
 
     class Meta:
         model = Event
-        fields = ('category', 'name', 'details',
-                  'venue', 'time', 'date',)
+        fields = ('category', 'name', 'details', 'venue', 'time', 'date',)
 
 
 class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        fields = ('post',)
+        fields = ('comment',)
+        widgets = {
+            'comment': forms.Textarea(attrs={'class': 'form-control'}),
+        }

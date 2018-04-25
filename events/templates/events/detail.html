@@ -1,26 +1,70 @@
 {% extends 'events/base.html' %}
+{% load events_tags %}
+{% load crispy_forms_filters %}
+
+
   {% block content %}
-    <h1>{{ event.name }}</h1>
-    <h3>{{ event.details }}</h3>
-    <div>
-      <a href="{% url 'events:event-delete' event.id %}">Delete</a>
-    </div>
-    <div>
-      <a href="{% url 'events:event-update' event.id %}">Update</a>
+      <div class="card">
+        <div class="card-body">
+            <h3 class="card-text"><small>Organizer: {{ event.creator|capfirst }}</small></h3>
+            <h1 class="card-text">{{ event.name }}</h1>
+            <h3 class="card-text text-muted float-left">{{ event.date }}; </h3>
+
+            <h3 class="card-text text-muted">{{ event.time }}</h3>
+            <a class="btn btn-primary btn active w-25" href="{% url 'events:attend_event' event.id %}">Attend</a>
+
+        </div>
+      </div>
+
+      <div class="jumbotron w-75 mx-auto">
+        <h1 class="display-4">Details</h1>
+        <p class="lead">{{ event.details }}</p>
+      </div>
+
+
+    <div class="mx-auto w-75">
+        <p>
+            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                {{ event.num_of_attendees }} Attending
+            </a>
+
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                {% for attendee in attending %}
+                    <p>{{ attendee.username|capfirst }}</p>
+
+                {% endfor %}
+
+            </div>
+        </div>
     </div>
 
+
+
     <div>
+        <h2 class="w-75 mx-auto">{% total_comments %} Comments</h2>
       {% for comment in comments %}
-        <p>{{ user }}: {{ comment.post}}</p>
+          <div class="card w-75 mx-auto border-dark">
+            <div class="card-body">
+                <h4 class="card-text">{{ comment.created_by }}</h4>
+                <p class="card-text">{{ comment.comment }}</p>
+
+            </div>
+          </div>
 
       {%  endfor %}
 
     </div>
 
     <div>
-      <form method="post"> {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Add comment</button>
+
+    </div>
+
+    <div class="mx-auto w-100">
+      <form class="mx-auto w-50" method="post"> {% csrf_token %}
+        {{ form|crispy }}
+        <button class="mx-auto btn btn-primary btn-lg active w-25" type="submit">Add comment</button>
       </form>
 
 

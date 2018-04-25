@@ -1,8 +1,21 @@
 {% extends 'events/base.html' %}
+{% load events_filters %}
+
     {% block content %}
         {% for event in events %}
-            <div>
-                <h3><a href="{% url 'events:event-detail' event.id %}">{{event.name}}</a></h3>
+            <p class="mx-auto w-75"><strong>{{ event.date }}</strong></p>
+            <div class="card w-75 mx-auto border-info">
+                <div class="card-body">
+                    <div>
+                        <p class="card-text"><strong>{{ event.venue|upper }}</strong></p>
+                        <h2><a class="card-text text-info" href="{% url 'events:event-detail' event.id %}">{{event.name}}</a></h2>
+                        <p class="card-text"><small class="text-muted">{{ event.time }}</small></p>
+                    </div>
+
+
+                </div>
             </div>
         {% endfor %}
+
+
     {% endblock %}
