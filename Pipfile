@@ -6,9 +6,20 @@ name = "pypi"
 [dev-packages]
 
 [packages]
-django = "*"
-"psycopg2" = "*"
-django-crispy-forms = "*"
+django = "==2.0.4"
+"psycopg2" = "==2.7.4"
+django-crispy-forms = "==1.7.2"
+certifi = "==2018.4.16"
+dj-database-url = "==0.5.0"
+gunicorn = "==19.7.1"
+pipenv = "==11.10.0"
+"psycopg2-binary" = "==2.7.4"
+python-decouple = "==3.1"
+pytz = "==2018.4"
+toml = "==0.9.4"
+virtualenv = "==15.2.0"
+virtualenv-clone = "==0.3.0"
+whitenoise = "==3.3.1"
 
 [requires]
 python_version = "3.5"

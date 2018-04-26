@@ -4,7 +4,6 @@ Django==2.0.4
 django-crispy-forms==1.7.2
 gunicorn==19.7.1
 pipenv==11.10.0
-pkg-resources==0.0.0
 psycopg2==2.7.4
 psycopg2-binary==2.7.4
 python-decouple==3.1
