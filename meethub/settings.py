@@ -31,7 +31,7 @@ DATABASES = {
     }
 }
 
-ALLOWED_HOSTS= ['127.0.0.1', '.herokuapp.com']
+ALLOWED_HOSTS= ['127.0.0.1', 'themeethub.herokuapp.com']
 
 
 db_from_env = dj_database_url.config(conn_max_age=500)
