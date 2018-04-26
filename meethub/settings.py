@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-import django_heroku
 from decouple import config, Csv
 
 
@@ -144,6 +143,5 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Configure Django app for Heroku
 
-django_heroku.settings(locals())
 
 
