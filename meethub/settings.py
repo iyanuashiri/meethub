@@ -11,12 +11,13 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-from decouple import config, Csv
+import dj_database_url
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'pwieem0+cqs3-=vi!7(_6d1j96p@i#j$glrk774#a&1_st74yq'
-DEBUG = True
+DEBUG = False
 
 DATABASES = {
     'default': {
@@ -30,8 +31,11 @@ DATABASES = {
     }
 }
 
-ALLOWED_HOSTS= []
+ALLOWED_HOSTS= ['127.0.0.1', '.herokuapp.com']
 
+
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
