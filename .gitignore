@@ -5,3 +5,4 @@ lib64
 pip-selfcheck.json
 share/
 pyvenv.cfg
+.env
