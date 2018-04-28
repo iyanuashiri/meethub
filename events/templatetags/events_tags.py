@@ -6,7 +6,7 @@ register = template.Library()
 
 @register.simple_tag(name='total')
 def total_attending():
-    return
+    pass
 
 @register.simple_tag()
 def total_comments():

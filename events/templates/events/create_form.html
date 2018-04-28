@@ -1,8 +1,10 @@
 {% extends 'events/base.html' %}
+{% load static %}
 {% load crispy_forms_filters %}
 
 
   {% block content %}
+      {{ form.media }}
       <div class="mx-auto w-75">
           <form method="post" > {% csrf_token %}
             {{ form|crispy }}

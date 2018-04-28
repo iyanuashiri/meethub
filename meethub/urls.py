@@ -16,8 +16,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from filebrowser.sites import site
+
+# from . import settings
+
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('iyanuashiri/', admin.site.urls),
+    path('iyanuashiri/filebrowser/', site.urls),
     path('', include('events.urls')),
-    path('accounts/', include('accounts.urls'))
+    path('accounts/', include('accounts.urls')),
+    path('tinymce/', include('tinymce.urls')),
+
 ]
+
+#if settings.DEBUG:
+ #   urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+  #  urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

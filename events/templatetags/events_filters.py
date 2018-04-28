@@ -4,6 +4,6 @@ from django.utils.safestring import mark_safe
 register = template.Library()
 
 
-@register.filter(name='all_caps')
+@register.filter(name='total_attendees')
 def all_caps(text):
-    return str.upper(text)
+    pass

@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.shortcuts import reverse
 from django.contrib.auth.models import User
+from tinymce import HTMLField
 
 # Create your models here.
 
@@ -20,14 +21,14 @@ class Category(models.Model):
 
 class Event(models.Model):
     name = models.CharField(max_length=50)
-    details = models.TextField(max_length=10000)
+    details = HTMLField('Details')
     venue = models.CharField(max_length=200)
     date = models.DateField(help_text='Please use the following format: <em>YYYY-MM-DD</em>.')
-    time = models.TimeField(help_text= 'Please use the following format: <em>HH:MM:SS<em>')
+    time = models.TimeField(help_text='Please use the following format: <em>HH:MM:SS<em>')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='events')
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     attendees = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='attending', blank=True)
-    num_of_attendees = models.PositiveIntegerField(default=2, blank=True)
+    num_of_attendees = models.PositiveIntegerField(default=0, blank=True)
 
     class Meta:
         verbose_name = 'event'
@@ -39,10 +40,6 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
-
-    def count_attendees(self):
-            self.num_of_attendees = self.num_of_attendees + 1
-            return self.num_of_attendees
 
 
 class Comment(models.Model):
@@ -59,4 +56,4 @@ class Comment(models.Model):
         return reverse('meet:event-detail', kwargs={'pk': self.pk})
 
     def __str__(self):
-        return self.post
+        return self.comment

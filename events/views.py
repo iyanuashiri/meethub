@@ -1,12 +1,14 @@
 from django.views import generic
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.models import User
+from django.views import View
+from django.contrib.auth.decorators import login_required
 
-from .models import Event
+from .models import Event, Comment
 from .forms import CommentForm
 
 
@@ -25,6 +27,42 @@ class EventList(LoginRequiredMixin, generic.ListView):
             return Event.objects.all()
 
 
+class EventDisplay(generic.DetailView):
+    model = Event
+    context_object_name = 'event'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = CommentForm()
+        context['comments'] = Comment.objects.all()
+        # context['attending'] = self.attendees.all
+        return context
+
+
+class CommentCreate(generic.CreateView):
+    model = Comment
+    template_name = 'events/detail.html'
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().post(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse('events:event-detail', kwargs={'pk':self.object.pk})
+
+
+class EventDetail(View):
+
+    def get(self, request, *args, **kwargs):
+        view = EventDisplay.as_view()
+        return view(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        view = CommentCreate.as_view()
+        return view(request, *args, **kwargs)
+
+
+@login_required()
 def event_detail(request, pk):
 
     event = get_object_or_404(Event, pk=pk)
@@ -80,12 +118,14 @@ class EventDelete(LoginRequiredMixin, SuccessMessageMixin, generic.DeleteView):
     success_message = "%(name)s was deleted successfully"
 
 
+@login_required()
 def attend_event(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
     attendee = User.objects.get(username=request.user)
 
-    event.attendees.add(attendee)
-    event.count_attendees()
-    messages.success(request, 'You are now attending {0}'.format(event.name))
-
+    if Event.objects.filter(pk=event_id, attendees=attendee).exists():
+        messages.success(request, "You are already attending before")
+    else:
+        event.attendees.add(attendee)
+        messages.success(request, 'You are now attending {0}'.format(event.name))
     return redirect('events:event-detail', pk=event.pk)

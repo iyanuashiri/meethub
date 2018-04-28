@@ -20,6 +20,8 @@ toml = "==0.9.4"
 virtualenv = "==15.2.0"
 virtualenv-clone = "==0.3.0"
 whitenoise = "==3.3.1"
+django-filebrowser-no-grappelli = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.5"

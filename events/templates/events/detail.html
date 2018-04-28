@@ -1,5 +1,6 @@
 {% extends 'events/base.html' %}
 {% load events_tags %}
+{% load events_filters %}
 {% load crispy_forms_filters %}
 
 
@@ -18,14 +19,14 @@
 
       <div class="jumbotron w-75 mx-auto">
         <h1 class="display-4">Details</h1>
-        <p class="lead">{{ event.details }}</p>
+        <p class="lead">{{ event.details|safe }}</p>
       </div>
 
 
     <div class="mx-auto w-75">
         <p>
             <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                {{ event.num_of_attendees }} Attending
+                {{ event.attendees.all.count }} Attending
             </a>
 
         </p>
@@ -43,7 +44,7 @@
 
 
     <div>
-        <h2 class="w-75 mx-auto">{% total_comments %} Comments</h2>
+        <h2 class="w-75 mx-auto">{{ event.comments.all.count }} Comments</h2>
       {% for comment in comments %}
           <div class="card w-75 mx-auto border-dark">
             <div class="card-body">
