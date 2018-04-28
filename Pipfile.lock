@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "830efb79bc579bfecd3d0d85584c8460577f3a25f9267cc55af91d8f89d9806f"
+            "sha256": "379ebee85b491932cd9a64a3f70afbc38deef1c477b37285115f17142b4f0b89"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -55,6 +55,22 @@
             "index": "pypi",
             "version": "==3.7.4"
         },
+        "django-js-asset": {
+            "hashes": [
+                "sha256:30149158206f693a5d027fe590096fc84495486bd11cd77d395b4f2ec27fc1d0",
+                "sha256:a395d8d19eb201ea8d2bd4f145b38f1717cd74c0f609f040141d8724c5a27f36"
+            ],
+            "index": "pypi",
+            "version": "==1.1.0"
+        },
+        "django-tinymce4-lite": {
+            "hashes": [
+                "sha256:7194e9e9241bbfd27cad92a58a43622d6d3b152c21be13243bcb33362a68988c",
+                "sha256:d335badd82c91c104a669ef510cb338ad2938d3be227a953d33f625bbc9bae98"
+            ],
+            "index": "pypi",
+            "version": "==1.7.1"
+        },
         "gunicorn": {
             "hashes": [
                 "sha256:75af03c99389535f218cc596c7de74df4763803f7b63eb09d77e92b3956b36c6",
@@ -62,6 +78,13 @@
             ],
             "index": "pypi",
             "version": "==19.7.1"
+        },
+        "jsmin": {
+            "hashes": [
+                "sha256:b6df99b2cd1c75d9d342e4335b535789b8da9107ec748212706ef7bbe5c2553b"
+            ],
+            "index": "pypi",
+            "version": "==2.2.2"
         },
         "pillow": {
             "hashes": [

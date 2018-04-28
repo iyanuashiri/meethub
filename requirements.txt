@@ -2,7 +2,12 @@ certifi==2018.4.16
 dj-database-url==0.5.0
 Django==2.0.4
 django-crispy-forms==1.7.2
+django-filebrowser-no-grappelli==3.7.4
+django-js-asset==1.1.0
+django-tinymce4-lite==1.7.1
 gunicorn==19.7.1
+jsmin==2.2.2
+Pillow==5.1.0
 pipenv==11.10.0
 psycopg2==2.7.4
 psycopg2-binary==2.7.4
