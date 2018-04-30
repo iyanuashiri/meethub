@@ -29,6 +29,7 @@ class EventList(LoginRequiredMixin, generic.ListView):
 
 class EventDisplay(generic.DetailView):
     model = Event
+    template_name = 'events/detail.html'
     context_object_name = 'event'
 
     def get_context_data(self, **kwargs):
@@ -42,10 +43,17 @@ class EventDisplay(generic.DetailView):
 class CommentCreate(generic.CreateView):
     model = Comment
     template_name = 'events/detail.html'
+    fields = ('comment',)
 
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        return super().post(request, *args, **kwargs)
+    def form_valid(self, form):
+        new_comment = form.save(commit=False)
+        #new_comment.event = self.get_object()
+        new_comment.created_by = self.get_object()
+        return super().form_valid(form)
+
+    #def post(self, request, *args, **kwargs):
+    #    self.object = self.get_object()
+      #  return super().post(request, *args, **kwargs)
 
     def get_success_url(self):
         return reverse('events:event-detail', kwargs={'pk':self.object.pk})
