@@ -67,6 +67,7 @@ INSTALLED_APPS = [
 
     'events',
     'accounts',
+    'userprofile'
 
 
 ]
