@@ -53,7 +53,7 @@ class Comment(models.Model):
         ordering = ('created_date', 'created_time')
 
     def get_absolute_url(self):
-        return reverse('meet:event-detail', kwargs={'pk': self.pk})
+        return reverse('events:event-detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.comment
