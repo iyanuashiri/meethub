@@ -35,31 +35,28 @@ class EventDisplay(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = CommentForm()
-        context['comments'] = Comment.objects.all()
-        # context['attending'] = self.attendees.all
+        context['comments'] = self.get_object().comments.all()
+        context['attending'] = self.get_object().attendees.all
         return context
 
 
-class CommentCreate(generic.CreateView):
+class CommentCreate(SuccessMessageMixin, generic.CreateView):
     model = Comment
     template_name = 'events/detail.html'
     fields = ('comment',)
+    success_message = 'Comment was added successfully'
 
     def form_valid(self, form):
-        new_comment = form.save(commit=False)
-        #new_comment.event = self.get_object()
-        new_comment.created_by = self.get_object()
+        form.instance = form.save(commit=False)
+        form.instance.event = self.get_object(queryset=Event.objects.all())
+        form.instance.created_by = self.request.user
         return super().form_valid(form)
 
-    #def post(self, request, *args, **kwargs):
-    #    self.object = self.get_object()
-      #  return super().post(request, *args, **kwargs)
-
     def get_success_url(self):
-        return reverse('events:event-detail', kwargs={'pk':self.object.pk})
+        return reverse_lazy('events:event-detail', kwargs={'pk': self.get_object(Event.objects.all()).pk})
 
 
-class EventDetail(View):
+class EventDetail(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         view = EventDisplay.as_view()
