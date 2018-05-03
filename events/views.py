@@ -67,32 +67,6 @@ class EventDetail(LoginRequiredMixin, View):
         return view(request, *args, **kwargs)
 
 
-@login_required()
-def event_detail(request, pk):
-
-    event = get_object_or_404(Event, pk=pk)
-
-    comments = event.comments.all()
-
-    attending = event.attendees.all()
-
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            new_comment = form.save(commit=False)
-            new_comment.event = event
-            new_comment.created_by = request.user
-            new_comment.save()
-            messages.success(request, 'Comment was created successfully')
-            return redirect('events:event-detail', pk=event.pk)
-    else:
-        form = CommentForm()
-
-    return render(request, 'events/detail.html', {'event': event, 'comments': comments,
-                                                  'form': form, 'attending': attending,
-                                                  })
-
-
 class EventFormMixin(object):
     def form_valid(self, form):
         form.instance.creator = self.request.user
