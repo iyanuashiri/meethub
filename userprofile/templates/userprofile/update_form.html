@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'events/base.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+    <div class="mx-auto w-50">
+        <h1>Edit your profile</h1>
+        <form method="post" action="." enctype="multipart/form-data">{% csrf_token %}
+            {{ user_form|crispy }}
+            {{ profile_form|crispy }}
+            <button class="mx-auto btn btn-primary btn active w-25" type="submit">Save changes</button>
+        </form>
+    </div>
+{% endblock %}

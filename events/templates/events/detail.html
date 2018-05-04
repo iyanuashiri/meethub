@@ -12,7 +12,7 @@
             <h3 class="card-text text-muted float-left">{{ event.date }}; </h3>
 
             <h3 class="card-text text-muted">{{ event.time }}</h3>
-            <a class="btn btn-primary btn active w-25" href="{% url 'events:attend_event' event.id %}">Attend</a>
+            <a class="btn btn-success btn active w-25" href="{% url 'events:attend_event' event.id %}">Attend</a>
 
         </div>
       </div>
@@ -26,7 +26,7 @@
     <div class="mx-auto w-75">
         <p>
             <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                {{ event.attendees.all.count }} Attending
+                {{ event.get_number_of_attendees }} Attending
             </a>
 
         </p>
@@ -44,7 +44,7 @@
 
 
     <div>
-        <h2 class="w-75 mx-auto">{{ event.comments.all.count }} Comments</h2>
+        <h2 class="w-75 mx-auto">{{ event.get_comments_number }} Comments</h2>
       {% for comment in comments %}
           <div class="card w-75 mx-auto border-dark">
             <div class="card-body">

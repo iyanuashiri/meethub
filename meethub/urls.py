@@ -29,6 +29,7 @@ urlpatterns = [
     path('', include('events.urls')),
     path('accounts/', include('accounts.urls')),
     path('tinymce/', include('tinymce.urls')),
+    path('userprofile/', include('userprofile.urls')),
 
 ]
 

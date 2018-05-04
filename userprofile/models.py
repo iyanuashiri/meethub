@@ -9,5 +9,11 @@ class Profile(models.Model):
     date_of_birth = models.DateField(blank=True, null=True)
     photo = models.ImageField(upload_to='users/%Y/%m/%d', blank=True)
 
+    class Meta:
+        verbose_name_plural = 'Profiles'
+
     def __str__(self):
         return '{0}\'s profile'.format(self.user.username)
+
+    def get_date_of_birth(self):
+        return self.user.date_of_birth

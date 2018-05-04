@@ -6,6 +6,7 @@
   {% block content %}
       {{ form.media }}
       <div class="mx-auto w-75">
+          <h1>Congratulations, You want to create an event</h1>
           <form method="post" > {% csrf_token %}
             {{ form|crispy }}
             <button class="mx-auto btn btn-primary btn active w-25" type="submit"> Create</button>

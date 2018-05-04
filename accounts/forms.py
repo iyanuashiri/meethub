@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
+from userprofile.models import Profile
+
 
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=50, required=False, help_text='Optional')
@@ -20,4 +22,14 @@ class SignUpForm(UserCreationForm):
             'password1': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
+    # This is an override of the save() method. It attaches a profile to a user when they register
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
 
+            user.save()
+            # This is the attached profile
+            profile = Profile.objects.create(user=user)
+            user.save()
+            return profile

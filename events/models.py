@@ -2,7 +2,9 @@ from django.db import models
 from django.conf import settings
 from django.shortcuts import reverse
 from django.contrib.auth.models import User
+
 from tinymce import HTMLField
+
 
 # Create your models here.
 
@@ -40,6 +42,12 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_number_of_attendees(self):
+        return self.attendees.all().count()
+
+    def get_comments_number(self):
+        return self.comments.all().count()
 
 
 class Comment(models.Model):
