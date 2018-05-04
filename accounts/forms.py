@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 from userprofile.models import Profile
+from actions.utils import create_action
 
 
 class SignUpForm(UserCreationForm):
@@ -31,5 +32,7 @@ class SignUpForm(UserCreationForm):
             user.save()
             # This is the attached profile
             profile = Profile.objects.create(user=user)
+            create_action(user, 'has created an account')
             user.save()
-            return profile
+
+            return user

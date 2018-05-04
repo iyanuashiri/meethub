@@ -8,6 +8,8 @@ from django.contrib.auth.models import User
 from django.views import View
 from django.contrib.auth.decorators import login_required
 
+from actions.utils import create_action
+
 from .models import Event, Comment
 from .forms import CommentForm
 
@@ -50,6 +52,8 @@ class CommentCreate(SuccessMessageMixin, generic.CreateView):
         form.instance = form.save(commit=False)
         form.instance.event = self.get_object(queryset=Event.objects.all())
         form.instance.created_by = self.request.user
+        create_action(self.request.user, 'added a comment', form.instance)
+        form.save()
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -70,6 +74,7 @@ class EventDetail(LoginRequiredMixin, View):
 class EventFormMixin(object):
     def form_valid(self, form):
         form.instance.creator = self.request.user
+        create_action(self.request.user, 'created a new event', form.instance)
         return super().form_valid(form)
 
 
@@ -106,5 +111,6 @@ def attend_event(request, event_id):
         messages.success(request, "You are already attending before")
     else:
         event.attendees.add(attendee)
+        create_action(request.user, 'is attending', event)
         messages.success(request, 'You are now attending {0}'.format(event.name))
     return redirect('events:event-detail', pk=event.pk)

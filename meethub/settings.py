@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'tinymce',
     'filebrowser',
+    'stream_django',
 
     'events',
     'accounts',
@@ -193,3 +194,7 @@ TINYMCE_DEFAULT_CONFIG = {
     'menubar': True,
     'statusbar': True,
     }
+
+
+STREAM_API_KEY = 'hu6phc4peg6e'
+STREAM_API_SECRET = 'xehu23ctu6kjecdc4gfsuf7ufv66sqzcshj9mjwc4bp5khz4wpbv656pd9tpjudz'
