@@ -90,7 +90,7 @@ class EventUpdate(LoginRequiredMixin, SuccessMessageMixin, EventFormMixin, gener
     model = Event
     template_name = 'events/update_form.html'
     template_name_suffix = '_update_form'
-    fields = ('category', 'name', 'details', 'venue', 'time', 'date', 'creator')
+    fields = ('category', 'name', 'details', 'venue', 'time', 'date',)
     success_message = "%(name)s was updated successfully"
 
 

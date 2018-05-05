@@ -30,6 +30,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('tinymce/', include('tinymce.urls')),
     path('userprofile/', include('userprofile.urls')),
+    path('notifications', include('actions.urls'))
 
 ]
 
