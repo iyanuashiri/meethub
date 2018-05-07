@@ -25,7 +25,6 @@ def edit_profile(request):
             profile_form.save()
 
     else:
-        profile = Profile.objects.create(user=request.user)
         user_form = UserForm(instance=request.user)
         profile_form = ProfileForm(instance=request.user.profile)
 
