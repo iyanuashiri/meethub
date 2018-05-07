@@ -15,27 +15,6 @@ from .models import Profile
 
 # Create your views here.
 
-
-class EditProfile(LoginRequiredMixin, SuccessMessageMixin, TemplateView):
-    template_name = 'userprofile/update_form.html'
-    success_message = "%(Profile)s was updated successfully"
-
-    def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        context['user_form'] = UserForm(instance=request.user)
-        context['profile_form'] = ProfileForm(instance=request.user.profile)
-        return self.render_to_response(context)
-
-    def post(self, request):
-        user_form = UserForm(instance=request.user)
-        profile_form = ProfileForm(instance=request.user.profile, data=request.POST, files=request.FILES)
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-        context = {'user_form': user_form, 'profile_form': profile_form}
-        return self.render_to_response(context)
-
-
 def edit_profile(request):
     if request.method == 'POST':
         user_form = UserForm(instance=request.user, data=request.POST)
@@ -46,6 +25,7 @@ def edit_profile(request):
             profile_form.save()
 
     else:
+        profile = Profile.objects.create(user=request.user)
         user_form = UserForm(instance=request.user)
         profile_form = ProfileForm(instance=request.user.profile)
 
