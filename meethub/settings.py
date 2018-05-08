@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 import dj_database_url
 
+import cloudinary
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -65,6 +67,7 @@ INSTALLED_APPS = [
     'tinymce',
     'filebrowser',
     'stream_django',
+    'cloudinary',
 
     'events',
     'accounts',
@@ -198,3 +201,9 @@ TINYMCE_DEFAULT_CONFIG = {
 
 STREAM_API_KEY = 'hu6phc4peg6e'
 STREAM_API_SECRET = 'xehu23ctu6kjecdc4gfsuf7ufv66sqzcshj9mjwc4bp5khz4wpbv656pd9tpjudz'
+
+cloudinary.config(
+  cloud_name = "iyanuashiri",
+  api_key = "789549944174336",
+  api_secret = "BqmWbUJ-7bxoQXWZqEmfHhb3z3U"
+)

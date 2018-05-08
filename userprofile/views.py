@@ -16,9 +16,12 @@ from .models import Profile
 # Create your views here.
 
 def edit_profile(request):
+    context = dict(backend_form=ProfileForm())
+
     if request.method == 'POST':
         user_form = UserForm(instance=request.user, data=request.POST)
         profile_form = ProfileForm(instance=request.user.profile, data=request.POST, files=request.FILES)
+        context['posted'] = profile_form.instance
 
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
