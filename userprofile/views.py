@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect
-from django.views.generic.base import TemplateResponseMixin, TemplateView
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.models import User
 from django.views import View
 from django.urls import reverse_lazy
+from django.core.exceptions import ObjectDoesNotExist
 
-from events.views import EventList
 from events.models import Event, Comment
 from .forms import ProfileForm, UserForm
 from .models import Profile
@@ -16,6 +15,8 @@ from .models import Profile
 # Create your views here.
 
 def edit_profile(request):
+
+    # This line is a part of the connection to Cloudinary API
     context = dict(backend_form=ProfileForm())
 
     if request.method == 'POST':
@@ -28,13 +29,19 @@ def edit_profile(request):
             profile_form.save()
 
     else:
+
+        # This creates a profile for users that don't have a profile.
+        # They didn't have a profile because they registered before the profile feature was added.
+        # A profile is created for a user during the process of signup.
+
+        profile = Profile.objects.get_or_create(user=request.user)
         user_form = UserForm(instance=request.user)
         profile_form = ProfileForm(instance=request.user.profile)
 
     return render(request, 'userprofile/update_form.html', {'user_form': user_form, 'profile_form': profile_form})
 
 
-class UserDetail(generic.DetailView):
+class UserDetail(LoginRequiredMixin, generic.DetailView):
     model = User
     template_name = 'userprofile/profile_detail.html'
     context_object_name = 'user'
