@@ -1,3 +1,3 @@
 # meethub
 
-This is a Meetup Clone
+This is an event management system
