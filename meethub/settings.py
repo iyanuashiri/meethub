@@ -30,11 +30,11 @@ DATABASES = {
 }
 
 
-public_root = root.path('public/')
+public_root = root.path()
 
-MEDIA_ROOT = public_root('media')
+MEDIA_ROOT = ('media')
 MEDIA_URL = '/media/'
-STATIC_ROOT = public_root('static')
+STATIC_ROOT = ('static')
 STATIC_URL = '/static/'
 
 SECRET_KEY = env('SECRET_KEY')
