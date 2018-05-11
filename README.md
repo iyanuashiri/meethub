@@ -1,7 +1,7 @@
 # meethub
 
-This is an event management system
+## This is an event management system
 
-TODO
+## TODO
 - [] Write API
--[] Write tests
+- [] Write tests
