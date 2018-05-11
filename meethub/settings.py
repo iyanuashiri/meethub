@@ -10,47 +10,37 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
-import os
-import dj_database_url
 
+import os
+import environ
 import cloudinary
 
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+root = environ.Path(__file__)
+env = environ.Env(DEBUG=(bool, False),)
+environ.Env.read_env()
 
-SECRET_KEY = 'pwieem0+cqs3-=vi!7(_6d1j96p@i#j$glrk774#a&1_st74yq'
-DEBUG = True
+SITE_ROOT = root()
+
+DEBUG = env('DEBUG')
+TEMPLATE_DEBUG = DEBUG
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'meethub_database',
-        'USER': 'iyanu',
-        'PASSWORD': 'miracle12@v',
-        'HOST': 'localhost',
-        'PORT': '',
-
-    }
+    'default': env.db()
 }
 
-ALLOWED_HOSTS= ['127.0.0.1', 'themeethub.herokuapp.com']
+
+public_root = root.path('public/')
+
+MEDIA_ROOT = public_root('media')
+MEDIA_URL = 'media/'
+STATIC_ROOT = public_root('static')
+STATIC_URL = 'static/'
+
+SECRET_KEY = env('SECRET_KEY')
 
 
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-
-
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-
-# SECURITY WARNING: don't run with debug turned on in production!
-
+ALLOWED_HOSTS = ['127.0.0.1', 'themeethub.herokuapp.com']
 
 
 # Application definition
@@ -108,13 +98,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'meethub.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-
-
-
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
@@ -151,11 +134,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -165,8 +143,6 @@ LOGOUT_REDIRECT_URL = '/'
 
 # Django-crispy
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-# Configure Django app for Heroku
 
 
 TINYMCE_DEFAULT_CONFIG = {
@@ -203,7 +179,7 @@ STREAM_API_KEY = 'hu6phc4peg6e'
 STREAM_API_SECRET = 'xehu23ctu6kjecdc4gfsuf7ufv66sqzcshj9mjwc4bp5khz4wpbv656pd9tpjudz'
 
 cloudinary.config(
-  cloud_name = "iyanuashiri",
-  api_key = "789549944174336",
-  api_secret = "BqmWbUJ-7bxoQXWZqEmfHhb3z3U"
+  cloud_name=env('cloud_name'),
+  api_key=env('api_key'),
+  api_secret=env('api_secret')
 )
