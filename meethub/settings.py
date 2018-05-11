@@ -33,9 +33,9 @@ DATABASES = {
 public_root = root.path('public/')
 
 MEDIA_ROOT = public_root('media')
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 STATIC_ROOT = public_root('static')
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 SECRET_KEY = env('SECRET_KEY')
 
@@ -179,7 +179,8 @@ STREAM_API_KEY = 'hu6phc4peg6e'
 STREAM_API_SECRET = 'xehu23ctu6kjecdc4gfsuf7ufv66sqzcshj9mjwc4bp5khz4wpbv656pd9tpjudz'
 
 cloudinary.config(
-  cloud_name=env('cloud_name'),
-  api_key=env('api_key'),
-  api_secret=env('api_secret')
+    cloud_name = env.str('CLOUD_NAME'),
+    api_key = env.str('API_KEY'),
+    api_secret = env.str('API_SECRET')
 )
+
