@@ -3,5 +3,5 @@
 ## This is an event management system
 
 ## TODO
-- [] Write API
-- [] Write tests
+- [ ] Write API
+- [ ] Write tests
