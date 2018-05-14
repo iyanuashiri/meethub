@@ -9,12 +9,16 @@
 - [ ] Write tests
 
 
-![explore page](https://res.cloudinary.com/iyanuashiri/image/upload/v1526055649/explore.png)
+![explore page](https://screenshots.firefox.com/H0WdCJvLEG1FV19b/themeethub.herokuapp.com)
 
-![create event](https://res.cloudinary.com/iyanuashiri/image/upload/v1526055649/explore2.png)
 
-![notifications](https://res.cloudinary.com/iyanuashiri/image/upload/v1526055649/explore3.png)
+![create event](https://screenshots.firefox.com/mtjHSolIwkssmNTf/themeethub.herokuapp.com)
 
-![profile](https://res.cloudinary.com/iyanuashiri/image/upload/v1526055649/explore4.png)
 
-![login](https://res.cloudinary.com/iyanuashiri/image/upload/v1526055649/explore5.png)
+![notifications](https://screenshots.firefox.com/4LGfa37oIsQDecw5/themeethub.herokuapp.com)
+
+
+![profile](https://screenshots.firefox.com/41Tyo9cH5sQD7Ibo/themeethub.herokuapp.com)
+
+
+![login](https://screenshots.firefox.com/7ZuPUZ6os5oFaNok/themeethub.herokuapp.com)
