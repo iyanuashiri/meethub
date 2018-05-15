@@ -45,5 +45,3 @@ class ProfileViewset(viewsets.ModelViewSet):
     """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-
-
