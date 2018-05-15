@@ -37,6 +37,7 @@ stream-django = "==1.4.0"
 stream-python = "==2.8.1"
 "urllib3" = "==1.22"
 django-environ = "*"
+djangorestframework = "*"
 
 [requires]
 python_version = "3.5"
