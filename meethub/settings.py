@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'filebrowser',
     'stream_django',
     'cloudinary',
+    'rest_framework',
 
     'events',
     'accounts',
@@ -174,9 +175,6 @@ TINYMCE_DEFAULT_CONFIG = {
     'statusbar': True,
     }
 
-
-STREAM_API_KEY = 'hu6phc4peg6e'
-STREAM_API_SECRET = 'xehu23ctu6kjecdc4gfsuf7ufv66sqzcshj9mjwc4bp5khz4wpbv656pd9tpjudz'
 
 cloudinary.config(
     cloud_name = env.str('CLOUD_NAME'),
