@@ -30,8 +30,11 @@ class SignUpForm(UserCreationForm):
         if commit:
 
             user.save()
+
             # This is the attached profile
             profile = Profile.objects.create(user=user)
+
+            # This creates an action that is displayed in the notifiications page whenever an account is created
             create_action(user, 'has created an account')
             user.save()
 

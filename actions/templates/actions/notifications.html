@@ -1,6 +1,7 @@
 {% extends 'events/base.html' %}
 
     {% block content %}
+        <div class="mx-auto w-50 card bg-light">
         {% for action in actions %}
             {% with user=action.user profile=action.user.profile  %}
             <div>
@@ -43,6 +44,7 @@
             {% endwith %}
 
         {% endfor %}
+        </div>
 
 
     {% endblock %}

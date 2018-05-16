@@ -1,10 +1,18 @@
 {% extends 'events/base.html' %}
 {% load static %}
+{% load cloudinary %}
     {% block content %}
      <div class="shadow-lg p-3 mb-5 bg-light rounded">
         <div class="card">
             <div class="card-body">
-                <img src="">
+                {% comment %}
+                <div class="d-flex ">
+                    <img src="https://res.cloudinary.com/iyanuashiri/image/upload/v1525738692/cxwoqp9g9cjznadeooel.jpg"
+                width="100" height="150">
+                </div>
+                {% endcomment %}
+                {% cloudinary user.profile.photo width=150 height=170 crop="fill" gravity='face' radius='max' %}
+
                 <h2 class="card-text">{{ user.get_full_name }}</h2>
                 <h4 class="card-text">{{ user.email }}</h4>
                 <h1>{{ user.profile.date_of_birth }}</h1>

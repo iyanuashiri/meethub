@@ -2,6 +2,7 @@
 {% load events_tags %}
 {% load events_filters %}
 {% load crispy_forms_filters %}
+{% load cloudinary %}
 
 
   {% block content %}
@@ -48,7 +49,7 @@
       {% for comment in comments %}
           <div class="card w-75 mx-auto border-dark">
             <div class="card-body">
-                <h4 class="card-text">{{ comment.created_by }}</h4>
+                <h4 class="card-text">{% cloudinary comment.get_comment_creator_photo width=45 height=45 radius='max' crop='fill' %}{{ comment.created_by }}</h4>
                 <p class="card-text">{{ comment.comment }}</p>
 
             </div>

@@ -65,3 +65,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.comment
+
+    def get_comment_creator_photo(self):
+        return self.created_by.profile.photo
