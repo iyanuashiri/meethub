@@ -56,9 +56,11 @@ INSTALLED_APPS = [
     'crispy_forms',
     'tinymce',
     'filebrowser',
-    'stream_django',
+
     'cloudinary',
     'rest_framework',
+    'coverage',
+    'django_nose',
 
     'events',
     'accounts',
@@ -182,3 +184,9 @@ cloudinary.config(
     api_secret = env.str('API_SECRET')
 )
 
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=events,userprofile'
+]

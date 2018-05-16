@@ -30,7 +30,9 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('tinymce/', include('tinymce.urls')),
     path('userprofile/', include('userprofile.urls')),
-    path('notifications', include('actions.urls'))
+    path('notifications/', include('actions.urls')),
+
+    path('api/v1/', include('apiv1.urls')),
 
 ]
 
