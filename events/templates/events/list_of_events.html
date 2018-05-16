@@ -7,9 +7,10 @@
             <div class="card w-75 mx-auto border-info">
                 <div class="card-body">
                     <div>
-                        <p class="card-text"><strong>{{ event.venue|upper }}</strong></p>
+                        <p class="card-text"><strong>{{ event.venue|upper }}</strong> - <small class="text-muted">{{ event.time }}</small></p>
                         <h2><a class="card-text text-info" href="{% url 'events:event-detail' event.id %}">{{event.name}}</a></h2>
-                        <p class="card-text"><small class="text-muted">{{ event.time }}</small></p>
+                        <p>{{event.details|safe|truncatewords_html:25}}</p>
+                        <span class="card-text"><strong>{{ event.get_number_of_attendees }}</strong> Attending</span>
                     </div>
 
 
