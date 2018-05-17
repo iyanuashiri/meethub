@@ -79,10 +79,12 @@ class CommentFormTest(TestCase):
         form = CommentForm(
             data={'comment': ''})
         self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors, {'comment': ['This field is required.']})
 
-    def test_event_form_comment_field_label(self):
-        form = EventForm()
+    def test_comment_form_comment_field_label(self):
+        form = CommentForm()
         self.assertTrue(form.fields['comment'].label == None or form.fields['comment'].label == 'Comment')
+
 
 
 

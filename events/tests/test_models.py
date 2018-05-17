@@ -1,3 +1,5 @@
+import datetime
+import mock
 from django.test import TestCase
 
 from events.models import Event, Category, Comment, User
@@ -65,6 +67,9 @@ class EventModelTest(TestCase):
         event = Event.objects.get(name='Party Outside')
         self.assertEquals(event.get_comments_number(), 0)
 
+    def test_verbose_name_plural(self):
+        self.assertEquals(str(Event._meta.verbose_name_plural), 'events')
+
 
 class CategoryModelTest(TestCase):
 
@@ -76,6 +81,9 @@ class CategoryModelTest(TestCase):
         category = Category.objects.get(name='Technology')
         expected_object_name = '{}'.format(category.name)
         self.assertEquals(expected_object_name, str(category))
+
+    def test_category_verbose_name_plural(self):
+        self.assertEquals(str(Category._meta.verbose_name_plural), 'categories')
 
 
 class CommentModelTest(TestCase):
@@ -101,3 +109,9 @@ class CommentModelTest(TestCase):
     def test_get_comment_creator_photo(self):
         comment = Comment.objects.get(comment='Hey yo')
         self.assertEquals(comment.get_comment_creator_photo(), None)
+
+    def test_comment_max_length(self):
+        comment = Comment.objects.get(comment='Hey yo')
+        max_length = comment._meta.get_field('comment').max_length
+        self.assertEquals(max_length, 500)
+
