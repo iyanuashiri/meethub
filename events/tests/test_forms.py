@@ -7,23 +7,16 @@ from userprofile.models import Profile
 
 class EventFormTest(TestCase):
 
-    @classmethod
-    def setUpTestData(cls):
-        category = Category.objects.create(name='Technology', description='This is the future')
-        user = User.objects.create(username='iyanu', password=12345, email='iyanu@gmail.com')
-        Event.objects.create(name='Party Outside', details='This party is gonna be banging again', venue='Mapo Hall',
-                             date='2018-05-18', time='12:25:00', category=category, creator=user)
 
-    def test_event_form_valid(self):
-        form = EventForm(
-            data={'name': 'Party Outside', 'details': 'This party is gonna be banging again', 'venue': 'Mapo Hall',
-                  'date': '2018-05-18', 'time': '12:25:00', 'category': 'category',})
-        self.assertTrue(form.is_valid())
+    def setUp(self):
+        self.category = Category.objects.create(name='Technology', description='This is the future')
+        self.user = User.objects.create(username='iyanu', password=12345, email='iyanu@gmail.com')
+        Event.objects.create(name='Party Outside', details='This party is gonna be banging again', venue='Mapo Hall',
+                             date='2018-05-18', time='12:25:00', category=self.category, creator=self.user)
 
     def test_event_form_invalid(self):
-        form = EventForm(
-            data={'name': '', 'details': '', 'venue': 'Mapo Hall',
-                  'date': '2018-05-18', 'time': '12:25:00', 'category': 'category', 'creator': 'user'})
+        form = EventForm(data={'name': '', 'details': '', 'venue': 'Mapo Hall',
+                               'date': '2018-05-18', 'time': '12:25:00', 'category': 'category', 'creator': 'user'})
         self.assertFalse(form.is_valid())
 
     def test_event_form_date_field_label(self):
@@ -61,18 +54,16 @@ class EventFormTest(TestCase):
 
 class CommentFormTest(TestCase):
 
-    @classmethod
-    def setUpTestData(cls):
+    def setUp(self):
         category = Category.objects.create(name='Technology', description='This is the future')
-        user = User.objects.create(username='iyanu', password=12345, email='iyanu@gmail.com')
-        event = Event.objects.create(name='Party Out', details='This party is gonna be banging', venue='Ibadan',
-                                     date='2018-06-18', time='12:00:00', category=category, creator=user)
-        Comment.objects.create(comment='Hey yo', event=event, created_by=user)
-        Profile.objects.create(date_of_birth='2018-12-12', user=user)
+        self.user = User.objects.create(username='iyanu', password=12345, email='iyanu@gmail.com')
+        self.event = Event.objects.create(name='Party Out', details='This party is gonna be banging', venue='Ibadan',
+                                     date='2018-06-18', time='12:00:00', category=category, creator=self.user)
+        Comment.objects.create(comment='Hey yo', event=self.event, created_by=self.user)
+        Profile.objects.create(date_of_birth='2018-12-12', user=self.user)
 
     def test_comment_form_valid(self):
-        form = CommentForm(
-            data={'comment': 'Hey yo'})
+        form = CommentForm(data={'comment': 'Hey yo'})
         self.assertTrue(form.is_valid())
 
     def test_comment_form_invalid(self):
