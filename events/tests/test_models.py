@@ -57,7 +57,11 @@ class EventModelTest(TestCase):
 
     def test_get_absolute_url(self):
         event = Event.objects.get(name='Party Outside')
-        self.assertEquals(event.get_absolute_url(), '/events/4/')
+        self.assertEquals(event.get_absolute_url(), '/events/14/')
+
+    def test_get_absolute_url_not_none(self):
+        event = Event.objects.get(name='Party Outside')
+        self.assertIsNotNone(event.get_absolute_url())
 
     def test_get_number_of_attendees(self):
         event = Event.objects.get(name='Party Outside')
@@ -104,7 +108,7 @@ class CommentModelTest(TestCase):
 
     def test_get_absolute_url(self):
         comment = Comment.objects.get(comment='Hey yo')
-        self.assertEquals(comment.get_absolute_url(), '/events/2/')
+        self.assertEquals(comment.get_absolute_url(), '/events/4/')
 
     def test_get_comment_creator_photo(self):
         comment = Comment.objects.get(comment='Hey yo')
