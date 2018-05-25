@@ -1,11 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.models import User
-from django.views import View
-from django.urls import reverse_lazy
-from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import login_required
 
 from events.models import Event, Comment
 from .forms import ProfileForm, UserForm
@@ -14,6 +11,7 @@ from .models import Profile
 
 # Create your views here.
 
+@login_required()
 def edit_profile(request):
 
     # This line is a part of the connection to Cloudinary API
@@ -34,7 +32,7 @@ def edit_profile(request):
         # They didn't have a profile because they registered before the profile feature was added.
         # A profile is created for a user during the process of signup.
 
-        profile = Profile.objects.get_or_create(user=request.user)
+        Profile.objects.get_or_create(user=request.user)
         user_form = UserForm(instance=request.user)
         profile_form = ProfileForm(instance=request.user.profile)
 
