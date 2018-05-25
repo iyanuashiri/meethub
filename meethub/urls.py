@@ -26,10 +26,10 @@ from filebrowser.sites import site
 urlpatterns = [
     path('iyanuashiri/', admin.site.urls),
     path('iyanuashiri/filebrowser/', site.urls),
-    path('', include('events.urls')),
+    path('', include('events.urls'), name='events'),
     path('accounts/', include('accounts.urls')),
     path('tinymce/', include('tinymce.urls')),
-    path('userprofile/', include('userprofile.urls')),
+    path('userprofile/', include('userprofile.urls'), name='userprofile'),
     path('notifications/', include('actions.urls')),
 
     path('api/v1/', include('apiv1.urls')),
