@@ -21,6 +21,7 @@ class EventList(LoginRequiredMixin, generic.ListView):
     model = Event
     template_name = 'events/list_of_events.html'
     context_object_name = 'events'
+    paginate_by = 10
 
     def get_queryset(self):
         if self.request.user.is_superuser:

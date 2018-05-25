@@ -34,7 +34,7 @@ class SignUpForm(UserCreationForm):
             # This is the attached profile
             profile = Profile.objects.create(user=user)
 
-            # This creates an action that is displayed in the notifiications page whenever an account is created
+            # This creates an action that is displayed in the notifications page whenever an account is created
             create_action(user, 'has created an account')
             user.save()
 

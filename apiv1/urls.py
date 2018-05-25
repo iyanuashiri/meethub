@@ -11,6 +11,7 @@ router.register(r'comments', viewsets.CommentViewset)
 router.register(r'category', viewsets.CategoryViewset)
 router.register(r'profile', viewsets.ProfileViewset)
 
+app_name = 'apiv1'
 urlpatterns = [
     path('', include(router.urls))
 ]
