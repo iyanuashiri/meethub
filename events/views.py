@@ -10,9 +10,9 @@ from django.contrib.auth.decorators import login_required
 
 from actions.utils import create_action
 from comments.models import Comment
+from comments.forms import CommentForm
 
 from .models import Event
-from .forms import CommentForm
 
 
 # Create your views here.
