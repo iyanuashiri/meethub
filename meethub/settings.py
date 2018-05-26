@@ -33,8 +33,12 @@ ALLOWED_HOSTS = ['127.0.0.1', 'themeethub.herokuapp.com']
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'meethub_database',
+        'USER': 'iyanu',
+        'PASSWORD': 'miracle12@v',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
