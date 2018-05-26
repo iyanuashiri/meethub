@@ -4,7 +4,8 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from .serializers import CategorySerializer, EventSerializer, CommentSerializer, ProfileSerializer, ActionSerializer
-from events.models import Category, Event, Comment
+from events.models import Category, Event
+from comments.models import Comment
 from userprofile.models import Profile
 from events.models import User
 

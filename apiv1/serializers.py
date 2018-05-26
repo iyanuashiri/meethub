@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from events.models import Category, Event, Comment, User
+from events.models import Category, Event, User
+from comments.models import Comment
 from userprofile.models import Profile
 from actions.models import Action
 
