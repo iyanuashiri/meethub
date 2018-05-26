@@ -15,32 +15,35 @@ import os
 import environ
 import cloudinary
 
-SECRET_KEY='pwieem0+cqs3-=vi!7(_6d1j96p@i#j$glrk774#a&1_st74yq'
 
-DEBUG = False
+root = environ.Path(__file__)
+env = environ.Env(DEBUG=(bool, False),)
+environ.Env.read_env()
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SITE_ROOT = root()
 
+DEBUG = env('DEBUG')
+TEMPLATE_DEBUG = DEBUG
+
+SECRET_KEY = env('SECRET_KEY')
+
+
+DATABASES = {
+    'default': env.db()
+}
+
+
+public_root = root.path()
+
+STATIC_ROOT = ('static')
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = ('media')
 MEDIA_URL = '/media/'
 
 
 ALLOWED_HOSTS = ['127.0.0.1', 'themeethub.herokuapp.com']
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'meethub_database',
-        'USER': 'iyanu',
-        'PASSWORD': 'miracle12@v',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
 
 
 # Application definition
@@ -180,10 +183,13 @@ TINYMCE_DEFAULT_CONFIG = {
     }
 
 
+
+
 cloudinary.config(
-    cloud_name = "iyanuashiri",
-    api_key = "789549944174336",
-    api_secret = "BqmWbUJ-7bxoQXWZqEmfHhb3z3U"
+    cloud_name = env.str('CLOUD_NAME'),
+    api_key = env.str('API_KEY'),
+    api_secret = env.str('API_SECRET')
+
 )
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
