@@ -15,29 +15,18 @@ import os
 import environ
 import cloudinary
 
+SECRET_KEY='pwieem0+cqs3-=vi!7(_6d1j96p@i#j$glrk774#a&1_st74yq'
 
-root = environ.Path(__file__)
-env = environ.Env(DEBUG=(bool, False),)
-environ.Env.read_env()
+DEBUG = False
 
-SITE_ROOT = root()
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-DEBUG = env('DEBUG')
-TEMPLATE_DEBUG = DEBUG
-
-DATABASES = {
-    'default': env.db()
-}
-
-
-public_root = root.path()
-
-MEDIA_ROOT = ('media')
-MEDIA_URL = '/media/'
-STATIC_ROOT = ('static')
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-SECRET_KEY = env('SECRET_KEY')
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 
 ALLOWED_HOSTS = ['127.0.0.1', 'themeethub.herokuapp.com']
