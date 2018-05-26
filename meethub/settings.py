@@ -170,9 +170,9 @@ TINYMCE_DEFAULT_CONFIG = {
 
 
 cloudinary.config(
-    cloud_name = env.str('CLOUD_NAME'),
-    api_key = env.str('API_KEY'),
-    api_secret = env.str('API_SECRET')
+    cloud_name = "iyanuashiri",
+    api_key = "789549944174336",
+    api_secret = "BqmWbUJ-7bxoQXWZqEmfHhb3z3U"
 )
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
