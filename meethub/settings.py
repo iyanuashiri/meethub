@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'userprofile',
     'actions',
     'apiv1',
+    'comments',
 
 
 ]
