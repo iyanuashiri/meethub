@@ -1,5 +1,6 @@
 from django import template
-from ..models import Event, Comment
+from ..models import Event
+from comments.models import Comment
 
 register = template.Library()
 
