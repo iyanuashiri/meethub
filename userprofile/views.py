@@ -4,7 +4,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-from events.models import Event, Comment
+from events.models import Event
+from comments.models import Comment
+
 from .forms import ProfileForm, UserForm
 from .models import Profile
 
