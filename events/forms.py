@@ -2,7 +2,7 @@ from django import forms
 
 from tinymce import TinyMCE
 
-from .models import Event, Comment
+from .models import Event
 
 
 class TinyMCEWidget(TinyMCE):
@@ -22,11 +22,4 @@ class EventForm(forms.ModelForm):
         fields = ('category', 'name', 'details', 'venue', 'time', 'date',)
 
 
-class CommentForm(forms.ModelForm):
 
-    class Meta:
-        model = Comment
-        fields = ('comment',)
-        widgets = {
-            'comment': forms.Textarea(attrs={'class': 'form-control'}),
-        }

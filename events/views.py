@@ -9,8 +9,9 @@ from django.views import View
 from django.contrib.auth.decorators import login_required
 
 from actions.utils import create_action
+from comments.models import Comment
 
-from .models import Event, Comment
+from .models import Event
 from .forms import CommentForm
 
 
