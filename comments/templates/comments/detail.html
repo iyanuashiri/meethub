@@ -1,0 +1,23 @@
+{% extends 'events/base.html' %}
+{% load cloudinary %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+    <div class="w-75 card mx-auto border-dark">
+            <div class="card-body">
+                <h4 class="card-text">{% cloudinary comment.get_comment_creator_photo width=45 height=45 radius='max' crop='fill' %}{{ comment.created_by }}</h4>
+                <p class="card-text">{{ comment.comment }}</p>
+            </div>
+    </div>
+
+    <div class="mx-auto w-100">
+      <form class="mx-auto w-50" method="post"> {% csrf_token %}
+        {{ form|crispy }}
+        <button class="mx-auto btn btn-primary btn-lg active w-25" type="submit">Add comment</button>
+      </form>
+
+
+    </div>
+
+
+{% endblock %}

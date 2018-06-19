@@ -3,7 +3,7 @@ from django.test import TestCase
 from events.models import Category, Event, User
 from userprofile.models import Profile
 
-from ..models import Comment
+from comments.models import Comment
 
 
 class CommentModelTest(TestCase):

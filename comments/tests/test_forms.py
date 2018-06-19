@@ -3,8 +3,8 @@ from django.test import TestCase
 from events.models import Category, Event, User
 from userprofile.models import Profile
 
-from ..models import Comment
-from ..forms import CommentForm
+from comments.models import Comment
+from comments.forms import CommentForm
 
 
 class CommentFormTest(TestCase):
@@ -30,4 +30,3 @@ class CommentFormTest(TestCase):
     def test_comment_form_comment_field_label(self):
         form = CommentForm()
         self.assertTrue(form.fields['comment'].label == None or form.fields['comment'].label == 'Comment')
-
