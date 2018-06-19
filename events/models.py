@@ -50,3 +50,4 @@ class Event(models.Model):
         return self.comments.all().count()
 
 
+

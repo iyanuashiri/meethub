@@ -1,9 +1,6 @@
-import datetime
-import mock
 from django.test import TestCase
 
-from events.models import Event, Category, Comment, User
-from userprofile.models import Profile
+from events.models import Event, Category, User
 
 
 class EventModelTest(TestCase):
@@ -57,7 +54,7 @@ class EventModelTest(TestCase):
 
     def test_get_absolute_url(self):
         event = Event.objects.get(name='Party Outside')
-        self.assertEquals(event.get_absolute_url(), '/events/14/')
+        self.assertEquals(event.get_absolute_url(), '/events/13/')
 
     def test_get_absolute_url_not_none(self):
         event = Event.objects.get(name='Party Outside')

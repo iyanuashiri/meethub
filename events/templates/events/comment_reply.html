@@ -1,0 +1,13 @@
+{% extends 'events/base.html' %}
+{% load crispy_forms_filters %}
+    {% block content %}
+        <div class="mx-auto w-100">
+      <form class="mx-auto w-50" method="post"> {% csrf_token %}
+        {{ form|crispy }}
+        <button class="mx-auto btn btn-primary btn-lg active w-25" type="submit">Add comment</button>
+      </form>
+
+
+    </div>
+
+    {% endblock %}

@@ -107,12 +107,19 @@ class EventDelete(LoginRequiredMixin, SuccessMessageMixin, generic.DeleteView):
 @login_required()
 def attend_event(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
-    # attendee = User.objects.get(username=request.user)
-
-    if Event.objects.filter(pk=event_id, attendees=request.user).exists():
-        messages.success(request, "You are already attending before")
-    else:
-        event.attendees.add(request.user)
-        create_action(request.user, 'is attending', event)
-        messages.success(request, 'You are now attending {0}'.format(event.name))
+    attendee = User.objects.get(username=request.user)
+    event.attendees.add(attendee)
+    create_action(attendee, 'is attending', event)
+    messages.success(request, 'You are now attending {0}'.format(event.name))
     return redirect('events:event-detail', pk=event.pk)
+
+
+@login_required()
+def not_attend_event(request, event_id):
+    event = get_object_or_404(Event, pk=event_id)
+    attendee = User.objects.get(username=request.user)
+    event.attendees.remove(attendee)
+    create_action(attendee, 'no longer attending', event)
+    messages.success(request, 'You are no longer attending {0}'.format(event.name))
+    return redirect('events:event-detail', pk=event.pk)
+

@@ -1,8 +1,11 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from events.models import Event, Category, User, Comment
-from events.forms import CommentForm
+from comments.models import Comment
+from comments.forms import CommentForm
+
+from events.models import Event, Category, User
+
 
 
 class EventListViewTest(TestCase):

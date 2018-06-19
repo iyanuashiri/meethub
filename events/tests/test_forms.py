@@ -1,8 +1,7 @@
 from django.test import TestCase
 
-from events.forms import EventForm, CommentForm
-from events.models import Event, Comment, Category, User
-from userprofile.models import Profile
+from events.forms import EventForm
+from events.models import Event, Category, User
 
 
 class EventFormTest(TestCase):

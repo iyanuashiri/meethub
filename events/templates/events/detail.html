@@ -13,8 +13,12 @@
             <h3 class="card-text text-muted float-left">{{ event.date }}; </h3>
 
             <h3 class="card-text text-muted">{{ event.time }}</h3>
-            <a class="btn btn-success btn active w-25" href="{% url 'events:attend_event' event.id %}">Attend</a>
+            {% if request.user in attending %}
+                <a class="btn btn-danger btn active w-25" href="{% url 'events:not_attend_event' event.id %}">Not Attending</a>
+            {% else %}
+                <a class="btn btn-success btn active w-25" href="{% url 'events:attend_event' event.id %}">Attend</a>
 
+            {% endif %}
         </div>
       </div>
 
@@ -24,14 +28,9 @@
       </div>
 
 
-    <div class="mx-auto w-75">
-        <p>
-            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                {{ event.get_number_of_attendees }} Attending
-            </a>
 
-        </p>
-        <div class="collapse" id="collapseExample">
+    <div class="mx-auto w-75">
+        <h2>{{ event.get_number_of_attendees }} Attending</h2>
             <div class="card card-body">
                 {% for attendee in attending %}
                     <p>{{ attendee.username|capfirst }}</p>
@@ -42,18 +41,49 @@
         </div>
     </div>
 
-
-
     <div>
         <h2 class="w-75 mx-auto">{{ event.get_comments_number }} Comments</h2>
       {% for comment in comments %}
-          <div class="card w-75 mx-auto border-dark">
-            <div class="card-body">
-                <h4 class="card-text">{% cloudinary comment.get_comment_creator_photo width=45 height=45 radius='max' crop='fill' %}{{ comment.created_by }}</h4>
-                <p class="card-text">{{ comment.comment }}</p>
+          {% if not comment.get_parents %}
 
-            </div>
-          </div>
+              <div class="media card w-75 mx-auto border-dark">
+                <div class="media-body card-body">
+                    <h4 class="card-text">{% cloudinary comment.get_comment_creator_photo width=45 height=45 radius='max' crop='fill' %}{{ comment.created_by }}</h4>
+                    <p class="card-text">{{ comment.comment }}</p>
+                    <a href="{% url 'comments:comment-detail' comment.id event.id %}">Reply</a>
+
+                    {% if comment.get_children %}
+
+                    <div class="media card mx-auto">
+                        <div class="media-body card-body">
+                            {% for child in comment.get_children %}
+                                <h4 class="card-text">{% cloudinary child.get_comment_creator_photo width=45 height=45 radius='max' crop='fill' %}{{ child.created_by }}</h4>
+                                <p class="card-text">{{ child.comment }}</p>
+                                <a href="{% url 'comments:comment-detail' child.id event.id %}">Reply</a>
+
+                                {% if child.get_children %}
+
+                                <div class="media card mx-auto">
+                                    <div class="media-body card-body">
+                                        {% for grandchild in child.get_children %}
+                                            <h4 class="card-text">{% cloudinary comment.get_comment_creator_photo width=45 height=45 radius='max' crop='fill' %}{{ grandchild.created_by }}</h4>
+                                            <p class="card-text">{{ grandchild.comment }}</p>
+                                        {% endfor %}
+
+                                    </div>
+                                </div>
+                                {% else %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                    {% endif %}
+                    </div>
+                </div>
+              </div>
+              <br>
+          {% endif %}
+
 
       {%  endfor %}
 
