@@ -39,6 +39,8 @@ django-environ = "*"
 djangorestframework = "*"
 coverage = "*"
 django-nose = "*"
+Pipfile = "*"
+factory-boy = "*"
 
 [requires]
 python_version = "3.5"

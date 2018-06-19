@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'coverage',
     'django_nose',
+    'factory',
 
     'events',
     'accounts',
@@ -196,5 +197,5 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 NOSE_ARGS = [
     '--with-coverage',
-    '--cover-package=userprofile, actions, events, accounts'
+    '--cover-package=userprofile, actions, events, accounts, comments'
 ]

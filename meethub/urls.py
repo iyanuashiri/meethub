@@ -31,6 +31,7 @@ urlpatterns = [
     path('tinymce/', include('tinymce.urls')),
     path('userprofile/', include('userprofile.urls'), name='userprofile'),
     path('notifications/', include('actions.urls')),
+    path('comments/', include('comments.urls')),
 
     path('api/v1/', include('apiv1.urls')),
 
