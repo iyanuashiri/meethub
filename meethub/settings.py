@@ -45,7 +45,7 @@ MEDIA_URL = '/media/'
 ALLOWED_HOSTS = ['127.0.0.1', 'themeethub.herokuapp.com']
 
 
-
+AUTH_USER_MODEL = 'accounts.Account'
 # Application definition
 
 INSTALLED_APPS = [
