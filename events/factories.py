@@ -11,8 +11,8 @@ class CategoryFactory(factory.DjangoModelFactory):
     class Meta:
         model = Category
 
-    name = factory.Faker('name')
-    description = factory.Faker('sentence')
+    name = 'Software'
+    description = 'For software developers'
 
 
 class EventFactory(factory.DjangoModelFactory):
@@ -20,9 +20,9 @@ class EventFactory(factory.DjangoModelFactory):
     class Meta:
         model = Event
 
-    name = factory.Faker('name')
-    details = factory.Faker('sentence')
-    venue = factory.Faker('address')
+    name = 'Pycon'
+    details = 'For Python developers'
+    venue = 'jand'
     date = factory.LazyFunction(datetime.today())
     time = factory.LazyFunction(datetime.time(datetime.now()))
     category = factory.SubFactory(CategoryFactory)
