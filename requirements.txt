@@ -20,7 +20,6 @@ mock==4.0.2
 pbr==5.4.5
 Pillow==7.1.2
 pipenv==2020.6.2
-psycopg2==2.8.5
 psycopg2-binary==2.8.5
 pycryptodomex==3.9.7
 PyJWT==1.7.1
