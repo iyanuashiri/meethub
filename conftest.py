@@ -4,10 +4,12 @@ from rest_framework.test import APIClient
 
 from accounts.factories import AccountFactory
 from events.factories import CategoryFactory, EventFactory
+from comments.factories import CommentFactory
 
 register(AccountFactory, 'account')
 register(CategoryFactory, 'category')
 register(EventFactory, 'event')
+register(CommentFactory, 'comment')
 
 
 @pytest.fixture
