@@ -13,15 +13,9 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 from pathlib import Path
-# import environ
 import cloudinary
 from decouple import config
 
-
-# root = environ.Path(__file__)
-# env = environ.Env(DEBUG=(bool, False),)
-# environ.Env.read_env()
-# SITE_ROOT = root()
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,8 +25,6 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['127.0.0.1', 'themeethub.herokuapp.com']
-
-# TEMPLATE_DEBUG = DEBUG
 
 INSTALLED_APPS = [
     'grappelli',
@@ -47,19 +39,15 @@ INSTALLED_APPS = [
     'crispy_forms',
     "crispy_bootstrap5",
     'tinymce',
-    # 'filebrowser',
 
     'cloudinary',
     'rest_framework',
-    # 'coverage',
-    # 'django_nose',
     'factory',
 
     'meethub.events.apps.EventsConfig',
     'meethub.accounts.apps.AccountsConfig',
     'meethub.profile.apps.ProfileConfig',
     'meethub.actions.apps.ActionsConfig',
-    # 'meethub.apiv1.apps.Apiv1Config',
     'meethub.comments.apps.CommentsConfig',
 ]
 
@@ -151,12 +139,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-# DATABASES = {
-#     'default': config('DATABASE_URL', cast=db_url)
-# }
-
-
-# public_root = root.path()
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
@@ -169,8 +151,6 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
-
-# STATIC_ROOT = ('static')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
@@ -236,12 +216,3 @@ cloudinary.config(
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
-
-# DIRECTORY = getattr(settings, "FILEBROWSER_DIRECTORY", 'uploads/')
-
-# TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-
-# NOSE_ARGS = [
-#     '--with-coverage',
-#     '--cover-package=profile, actions, events, accounts, comments'
-# ]
