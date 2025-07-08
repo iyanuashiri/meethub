@@ -40,39 +40,51 @@ MeetHub is an open source event management system built with Python and Django w
 - pip
 - virtualenv (recommended)
 
-### Setup
-1. Clone the repository
-```bash
-git clone https://github.com/iyanuashiri/meethub.git
-cd config
-```
 
-2. Create and activate virtual environment
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows use: venv\Scripts\activate
-```
+## Setup
 
-3. Install dependencies
-```bash
-pip install -r requirements.txt
-```
+virtual environment 
+1. Clone the repository `git clone https://github.com/iyanuashiri/meethub.git`
+2. Create a virtual environment `python -m venv venv`
+3. Activate the virtual environment `venv\Scripts\activate` on windows or `source venv/bin/activate` on linux
+4. Install the requirements `pip install -r requirements.txt`
+5. Run the migrations `python manage.py migrate`
+6. Run the server `python manage.py runserver`
 
-4. Configure environment variables
-```bash
-cp .env.example .env
-# Edit .env with your settings
-```
+uv
+1. Clone the repository `git clone https://github.com/iyanuashiri/meethub.git`
+2. uv sync
+3. uv run python manage.py migrate
+4. uv run python manage.py runserver
 
-5. Run migrations
-```bash
-python manage.py migrate
-```
+docker
+1. Clone the repository `git clone https://github.com/iyanuashiri/meethub.git`
+2. docker build -t meethub .
+3. docker run -p 8000:8000 meethub
 
-6. Start the development server
-```bash
-python manage.py runserver
-```
+
+
+## Cloud services 
+
+1. Cloudinary
+2. SendGrid
+3. Render
+4. NeonDB
+5. Redis.io
+
+## Environment variables
+
+1. SECRET_KEY
+2. DATABASE_NAME=
+3. DATABASE_USER=
+4. DATABASE_PASSWORD=
+5. DATABASE_HOST=
+6. DATABASE_PORT=
+7. DEBUG=True
+8. CLOUDINARY_NAME=
+9. CLOUDINARY_API_KEY=
+10. CLOUDINARY_API_SECRET=
+
 
 Visit `http://localhost:8000` in your browser.
 
