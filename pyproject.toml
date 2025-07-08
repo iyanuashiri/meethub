@@ -1,0 +1,27 @@
+[project]
+name = "meethub"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "cloudinary>=1.44.1",
+    "coverage>=7.9.2",
+    "crispy-bootstrap5>=2025.6",
+    "django>=5.2.4",
+    "django-crispy-forms>=2.4",
+    "django-filebrowser>=4.0.3",
+    "django-js-asset>=3.1.2",
+    "django-tinymce>=4.1.0",
+    "djangorestframework>=3.16.0",
+    "factory-boy>=3.3.3",
+    "faker>=37.4.0",
+    "gunicorn>=23.0.0",
+    "psycopg2-binary>=2.9.10",
+    "pytest>=8.4.1",
+    "pytest-django>=4.11.1",
+    "pytest-factoryboy>=2.8.1",
+    "python-decouple>=3.8",
+    "rest-framework-generic-relations>=2.2.0",
+    "whitenoise>=6.9.0",
+]
