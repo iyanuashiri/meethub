@@ -32,7 +32,8 @@
                 href += '&_popup=1';
             }
         }
-        var win = window.open(href, name, 'height=500,width=800,resizable=yes,scrollbars=yes');
+        // GRAPPELLI CUSTOM: changed width
+        var win = window.open(href, name, 'height=500,width=1000,resizable=yes,scrollbars=yes');
         win.focus();
         return false;
     }
@@ -49,6 +50,9 @@
         } else {
             document.getElementById(name).value = chosenId;
         }
+        // GRAPPELLI CUSTOM: element focus
+        elem.focus();
+        $(elem).trigger('change');
         win.close();
     }
 
@@ -58,7 +62,8 @@
 
     function updateRelatedObjectLinks(triggeringLink) {
         var $this = $(triggeringLink);
-        var siblings = $this.nextAll('.change-related, .delete-related');
+        // GRAPPELLI CUSTOM: use parent before nextAll
+        var siblings = $this.parent().nextAll().find('.view-related, .change-related, .delete-related');
         if (!siblings.length) {
             return;
         }
@@ -86,6 +91,8 @@
                 } else {
                     elem.value = newId;
                 }
+                // GRAPPELLI CUSTOM: element focus
+                elem.focus();
             }
             // Trigger a change event to update related links if required.
             $(elem).trigger('change');
@@ -100,6 +107,7 @@
 
     function dismissChangeRelatedObjectPopup(win, objId, newRepr, newId) {
         var id = windowname_to_id(win.name).replace(/^edit_/, '');
+        var elem = document.getElementById(id);
         var selectsSelector = interpolate('#%s, #%s_from, #%s_to', [id, id, id]);
         var selects = $(selectsSelector);
         selects.find('option').each(function() {
@@ -108,6 +116,8 @@
                 this.value = newId;
             }
         });
+        // GRAPPELLI CUSTOM: element focus
+        elem.focus();
         selects.next().find('.select2-selection__rendered').each(function() {
             // The element can have a clear button as a child.
             // Use the lastChild to modify only the displayed value.
@@ -119,6 +129,7 @@
 
     function dismissDeleteRelatedObjectPopup(win, objId) {
         var id = windowname_to_id(win.name).replace(/^delete_/, '');
+        var elem = document.getElementById(id);
         var selectsSelector = interpolate('#%s, #%s_from, #%s_to', [id, id, id]);
         var selects = $(selectsSelector);
         selects.find('option').each(function() {
@@ -126,8 +137,19 @@
                 $(this).remove();
             }
         }).trigger('change');
+        // GRAPPELLI CUSTOM: element focus
+        elem.focus();
         win.close();
     }
+
+    // GRAPPELLI CUSTOM
+    function removeRelatedObject(triggeringLink) {
+        var id = triggeringLink.id.replace(/^remove_/, '');
+        var elem = document.getElementById(id);
+        elem.value = "";
+        elem.focus();
+    }
+    window.removeRelatedObject = removeRelatedObject;
 
     // Global for testing purposes
     window.id_to_windowname = id_to_windowname;
@@ -146,7 +168,7 @@
     window.dismissAddAnotherPopup = dismissAddRelatedObjectPopup;
 
     $(document).ready(function() {
-        $("a[data-popup-opener]").click(function(event) {
+        $("a[data-popup-opener]").on('click', function(event) {
             event.preventDefault();
             opener.dismissRelatedLookupPopup(window, $(this).data("popup-opener"));
         });
@@ -167,7 +189,10 @@
                 updateRelatedObjectLinks(this);
             }
         });
-        $('.related-widget-wrapper select').trigger('change');
+        // GRAPPELLI CUSTOM
+        /* triggering select means that update_lookup is triggered with
+        generic autocompleted (which would empty the field) */
+        $('.grp-related-widget-tools').parent().children('.grp-related-widget').children('select:first-child').trigger('change');
         $('body').on('click', '.related-lookup', function(e) {
             e.preventDefault();
             var event = $.Event('django:lookup-related');
@@ -178,4 +203,4 @@
         });
     });
 
-})(django.jQuery);
+})(grp.jQuery);

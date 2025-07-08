@@ -29,7 +29,7 @@ var FileBrowser = {
     }
 }
 
-function addEventFB( obj, type, fn ) {
+function addEvent( obj, type, fn ) {
     if ( obj.attachEvent ) {
         obj['e'+type+fn] = fn;
         obj[type+fn] = function(){obj['e'+type+fn]( window.event );}
@@ -38,5 +38,5 @@ function addEventFB( obj, type, fn ) {
         obj.addEventListener( type, fn, false );
 }
 
-addEventFB(window, 'load', FileBrowser.init);
+addEvent(window, 'load', FileBrowser.init);
 

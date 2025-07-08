@@ -13,3 +13,4 @@ var FileBrowserDialogue = {
         self.editor.windowManager.close(parentWin);
     },
 }
+

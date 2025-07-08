@@ -1,65 +1,187 @@
+
+
+body.grp-filebrowser.grp-popup #grp-content {
+    top: 44px;
+}
+
+fieldset.grp-module p.grp-text {
+    margin: 4px 0 1px;
+}
+
+
+/*  Filebrowser Table
+------------------------------------------------------------------------------------------------------ */
+
+/*.filebrowser table {
+    font-size: 11px;
+}
+.filebrowser thead th.sorted a {
+    padding-right: 13px;
+}*/
+.grp-filebrowser thead th.filename {
+    min-width: 160px;
+}
+/*.filebrowser td {
+    padding: 9px 10px 6px 10px !important;
+}
+.filebrowser td.fb_thumbnail {
+    line-height: 11px;
+}*/
+
+
+
+/*  Filebrowser Buttons & Links
+------------------------------------------------------------------------------------------------------ */
+
+span.fb_type {
+    display: inline-block;
+    margin: 0 0;
+    padding: 1px 0;
+    color: #999;
+    font-size: 11px;
+    font-weight: bold;
+    font-style: italic;
+    border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;
+}
+span.fb_type.folder {
+    color: #666;
+    font-weight: bold;
+}
+
+
+/*  Filebrowser View-Link (contains thumbnail) & Select-Link......................................... */
+
+a.fb_viewlink, 
+button.fb_selectlink {
+    position: relative;
+    float: left;
+    top: -4px !important;
+    margin-bottom: -5px !important;
+}
+button.fb_selectlink {
+    padding: 3px 6px 4px;
+    width: auto !important;
+    height: 24px;
+    /*padding-top: 3px;
+    padding-bottom: 4px;
+    height: 24px;*/
+    font-size: 11px;
+}
+/*@media screen and (-webkit-min-device-pixel-ratio:0) {
+    button.fb_selectlink {
+        padding-top: 4px;
+    }
+}*/
+
+body.rtl a.fb_viewlink, 
+body.rtl button.fb_selectlink {
+    float: right;
+    top: -4px !important;
+    margin-bottom: -5px !important;
+    margin-right: 0;
+}
+
+
+
 /*  Filebrowser Pulldown Actions
 ------------------------------------------------------------------------------------------------------ */
 
-.fb_icon {
-    white-space: nowrap;
-}
-.pulldown-versions-container {
+.grp-pulldown-versions-container {
     position: relative;
-    display: inline-block;
+    float: left;
 }
-.pulldown-versions-handler {
+.grp-pulldown-versions-handler {
     position: relative;
-    display: inline-block;
-    width: 14px;
-    margin-right: 2px !important;
-}
-.pulldown-versions-handler:after {
-    position: absolute;
     display: block;
-    content: '';
-    left: 50%;
-    top: 50%;
-    width: 0px;
-    height: 0px;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-top: 6px solid #fff;
-    margin-left: -6px;
-    margin-top: -3px;
+    top: -4px;
+    margin-left: 2px;
+    padding: 0 !important;
+    width: 22px;
+    height: 22px;
+    border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
 }
-.pulldown-versions-handler:focus {
-    text-decoration: none;
+.grp-pulldown-versions-handler:link, .grp-pulldown-versions-handler:visited {
+    border: 1px solid #2B8AAB;
+    background: #309bbf url('../img/icon-pulldown-versions.png') 50% 9px no-repeat scroll;
+    background: url('../img/icon-pulldown-versions.png') 50% 9px no-repeat scroll, 
+                -moz-linear-gradient(top, #4FB2D3, #309bbf);
+    background: url('../img/icon-pulldown-versions.png') 50% 9px no-repeat scroll, 
+                -webkit-gradient(linear, left top, left bottom, from(#4FB2D3), to(#309bbf));
 }
-.open .pulldown-versions-handler:after {
-    border-top: 0;
-    border-bottom: 6px solid #fff;
+.grp-pulldown-versions-handler:hover, .grp-pulldown-versions-handler:active {
+    border: 1px solid #373737;
+    background: #666 url('../img/icon-pulldown-versions-hover.png') 50% 9px no-repeat scroll;
+    background: url('../img/icon-pulldown-versions-hover.png') 50% 9px no-repeat scroll, 
+                -moz-linear-gradient(top, #555, #444);
+    background: url('../img/icon-pulldown-versions-hover.png') 50% 9px no-repeat scroll, 
+                -webkit-gradient(linear, left top, left bottom, from(#555), to(#444));
 }
-ul.pulldown-versions {
+.grp-open .grp-pulldown-versions-handler {
+    border: 1px solid #373737;
+    background: #666 url('../img/icon-pulldown-versions-active.png') 50% 8px no-repeat scroll;
+    background: url('../img/icon-pulldown-versions-active.png') 50% 8px no-repeat scroll, 
+                -moz-linear-gradient(top, #555, #444);
+    background: url('../img/icon-pulldown-versions-active.png') 50% 8px no-repeat scroll, 
+                -webkit-gradient(linear, left top, left bottom, from(#555), to(#444));
+}
+ul.grp-pulldown-versions {
     display: none;
-    margin: 0;
-    padding: 0;
-    background: #f8f8f8;
-    border: 1px solid #ccc;
 }
-ul.pulldown-versions.open {
+.grp-open ul.grp-pulldown-versions {
     display: block;
     position: absolute;
     z-index: 1000;
+    margin: -2px 0 0 2px;
+    padding: 0;
+    border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
+    background: #eee;
+    background: #309bbf;
+    box-shadow: 0 0 50px #333; -moz-box-shadow: 0 0 50px #333; -webkit-box-shadow: 0 0 50px #333;
 }
-ul.pulldown-versions li {
-    list-style: none;
+ul.grp-pulldown-versions li {
+    border-top: 1px solid #3da8cc;
+    border-bottom: 1px solid #2987a6;
 }
-ul.pulldown-versions a {
+ul.grp-pulldown-versions li:first-child {
+    border-top: 0;
+}
+ul.grp-pulldown-versions li:last-child {
+    border-bottom: 0;
+}
+ul.grp-pulldown-versions a {
     display: block;
-    padding: 5px 15px;
+    padding: 5px 30px 5px 10px;
+    font-weight: bold;
     white-space: nowrap;
 }
-
-/* Table Header */
-thead th.sorted .text {
-    padding-right: 24px;
+ul.grp-pulldown-versions li:first-child a {
+    border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; -webkit-border-top-left-radius: 5px;
+    border-top-right-radius: 5px; -moz-border-radius-topright: 5px; -webkit-border-top-right-radius: 5px;
 }
+ul.grp-pulldown-versions li:last-child a {
+    border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; -webkit-border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; -webkit-border-bottom-right-radius: 5px;
+}
+ul.grp-pulldown-versions a:link, ul.grp-pulldown-versions a:visited {
+    color: #fff;
+    background: #309bbf;
+}
+ul.grp-pulldown-versions a:hover, ul.grp-pulldown-versions a:active {
+    color: #fff;
+    background: #444;
+}
+
+body.rtl .grp-pulldown-versions-handler {
+    margin-right: 2px;
+    margin-left: 0;
+}
+body.rtl .grp-open ul.grp-pulldown-versions {
+    margin: -2px 2px 0 0;
+}
+body.rtl ul.grp-pulldown-versions a {
+    padding: 5px 10px 5px 30px;
+}
+
 
 /* Upload button
 ------------------------------------------------------------------------------------------------------ */
@@ -100,24 +222,25 @@ thead th.sorted .text {
 .qq-upload-list {
     position: relative;
     clear: both;
-    margin: 8px -12px 0 -12px;
+    margin-top: 8px;
+    width: 100%;
     border-top: 1px solid #e0e0e0;
 }
 .qq-upload-list:empty {
     margin-top: 0;
     border-top: 0;
 }
-.qq-upload-list > div {
-    position: relative;
+.qq-upload-list li {
     font: 12px Arial, sans-serif;
-    padding: 8px 12px;
+    padding: 8px 0;
+    width: 100%;
     border-top: 1px solid #fff;
     border-bottom: 1px solid #e0e0e0;
 }
-.qq-upload-list > div + > div {
+.qq-upload-list li + li {
     border-top: 1px solid #fff;
 }
-.qq-upload-list > div:last-child {
+.qq-upload-list li:last-child {
     padding-bottom: 0;
     border-bottom: 0;
 }
@@ -135,8 +258,8 @@ span.qq-upload-file {
 }
 .qq-upload-cancel {
     position: absolute;
-    right: 14px;
-    margin: 0;
+    left: 334px;
+    margin: 0 -2px 0 0;
     color: transparent !important;
     width: 16px;
     height: 16px;
@@ -173,6 +296,7 @@ span.qq-upload-file {
     background-color: #fff;
     border: 1px solid #999;
     height: 6px;
+    width: 348px;
     margin: 4px 0 2px;
 }
 .progress-bar .content {
@@ -202,31 +326,27 @@ span.qq-upload-file {
     background: transparent url('../img/cancel.png') 0 0 no-repeat scroll;
 }
 
-/* Popup fixes */
-.popup.filebrowser .breadcrumbs {
-    padding-left: 10px;
-}
 
-.popup.filebrowser .object-tools {
-    margin-top: -35px;
-    margin-right: 10px;
+body.rtl .qq-upload-cancel {
+    left: auto;
+    right: 336px;
+    margin: 0;
 }
-
-.popup.filebrowser h1 {
-    display: none;
+body.rtl .qq-upload-list li {
+    position: relative;
+    float: right;
+    clear: both;
+    line-height: 14px;
 }
-
-.popup.filebrowser.change-list .filtered .results,
-.popup.filebrowser.change-list .filtered #toolbar {
-    margin-right: 260px;
+body.rtl .qq-upload-list li .progress-bar {
+    position: relative;
+    float: right;
+    clear: both;
 }
-
-/* Django 1.8 */
-.popup.filebrowser .old-design .object-tools {
-    margin-top: -20px;
-}
-
-.old-design .pulldown-versions-handler:after {
-    border-top-color: #000;
-    border-bottom-color: #000;
+body.rtl .qq-upload-list li span, 
+body.rtl .qq-upload-list li a {
+    float: right;
+    margin-right: 0;
+    margin-left: 10px;
+    vertical-align: baseline;
 }
