@@ -1,4 +1,4 @@
-"""meethub URL Configuration
+"""config URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.0/topics/http/urls/
@@ -24,16 +24,20 @@ from filebrowser.sites import site
 
 
 urlpatterns = [
-    path('iyanuashiri/', admin.site.urls),
-    path('iyanuashiri/filebrowser/', site.urls),
-    path('', include('events.urls'), name='events'),
-    path('accounts/', include('accounts.urls')),
-    path('tinymce/', include('tinymce.urls')),
-    path('userprofile/', include('userprofile.urls'), name='userprofile'),
-    path('notifications/', include('actions.urls')),
-    path('comments/', include('comments.urls')),
+    path('admin/filebrowser/', site.urls),
+    path('grappelli/', include('grappelli.urls')),
+    path('admin/', admin.site.urls),
+    # path('iyanuashiri/', admin.site.urls),
+    # path('iyanuashiri/filebrowser/', site.urls),
+    path('', include('meethub.events.urls'), name='events'),
+    
+    path('', include('meethub.accounts.urls')),
+    # path('tinymce/', include('tinymce.urls')),
+    path('', include('meethub.profile.urls'), name='profile'),
+    path('', include('meethub.actions.urls')),
+    path('', include('meethub.comments.urls')),
 
-    path('api/v1/', include('apiv1.urls')),
+    # path('api/v1/', include('apiv1.urls')),
 
 ]
 

@@ -1,0 +1,412 @@
+{% extends 'registration/base1.html' %}
+
+{% block title %}MeetHub - Connect, Meet, Grow{% endblock %}
+
+{% block content %}
+<style>
+    .hero-section {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 4rem 2rem;
+        text-align: center;
+        margin-bottom: 4rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 1.5rem;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-subtitle {
+        font-size: 1.3rem;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 2rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.6;
+    }
+
+    .feature-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        padding: 2rem;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .feature-icon {
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .stats-section {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 3rem 2rem;
+        margin: 4rem 0;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .stat-item {
+        text-align: center;
+        color: white;
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+
+    .cta-section {
+        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+        border-radius: 20px;
+        padding: 3rem 2rem;
+        text-align: center;
+        margin: 4rem 0;
+        color: white;
+    }
+
+    .testimonial-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 15px;
+        padding: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        margin-bottom: 2rem;
+    }
+
+    .testimonial-text {
+        font-style: italic;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+
+    .testimonial-author {
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+
+    .btn-hero {
+        background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
+        border: none;
+        border-radius: 50px;
+        padding: 15px 40px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 25px rgba(240, 147, 251, 0.3);
+        margin: 0 10px;
+    }
+
+    .btn-hero:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 35px rgba(240, 147, 251, 0.4);
+    }
+
+    .btn-hero-secondary {
+        background: transparent;
+        border: 2px solid white;
+        color: white;
+        border-radius: 50px;
+        padding: 15px 40px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        margin: 0 10px;
+    }
+
+    .btn-hero-secondary:hover {
+        background: white;
+        color: var(--primary-color);
+        transform: translateY(-3px);
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 3rem;
+        color: white;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .process-step {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        padding: 2rem;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        position: relative;
+        height: 100%;
+    }
+
+    .step-number {
+        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0 auto 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.1rem;
+        }
+        
+        .btn-hero, .btn-hero-secondary {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+        }
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <h1 class="hero-title">
+        <i class="fas fa-users me-3"></i>
+        Connect. Meet. Grow.
+    </h1>
+    <p class="hero-subtitle">
+        Discover amazing events, meet like-minded people, and build meaningful connections in your community. Join thousands of members already growing their networks through MeetHub.
+    </p>
+    <div class="mt-4">
+        <a href="{% url 'accounts:signup' %}" class="btn btn-hero">
+            <i class="fas fa-rocket me-2"></i>
+            Get Started Free
+        </a>
+        <a href="#features" class="btn btn-hero-secondary">
+            <i class="fas fa-play me-2"></i>
+            Learn More
+        </a>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+    <div class="row">
+        <div class="col-md-3 col-6">
+            <div class="stat-item">
+                <span class="stat-number">50K+</span>
+                <span class="stat-label">Active Members</span>
+            </div>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="stat-item">
+                <span class="stat-number">10K+</span>
+                <span class="stat-label">Events Hosted</span>
+            </div>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="stat-item">
+                <span class="stat-number">500+</span>
+                <span class="stat-label">Active Groups</span>
+            </div>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="stat-item">
+                <span class="stat-number">50+</span>
+                <span class="stat-label">Cities</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="mb-5">
+    <h2 class="section-title">Why Choose MeetHub?</h2>
+    <div class="row g-4">
+        <div class="col-lg-4">
+            <div class="feature-card">
+                <i class="fas fa-search-location feature-icon"></i>
+                <h3 class="h4 mb-3">Discover Local Events</h3>
+                <p class="text-muted">
+                    Find exciting meetups, workshops, and social events happening right in your neighborhood. From tech talks to hiking groups, there's something for everyone.
+                </p>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="feature-card">
+                <i class="fas fa-users-cog feature-icon"></i>
+                <h3 class="h4 mb-3">Build Your Network</h3>
+                <p class="text-muted">
+                    Connect with professionals, hobbyists, and enthusiasts who share your interests. Expand your social circle and create lasting friendships.
+                </p>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="feature-card">
+                <i class="fas fa-calendar-plus feature-icon"></i>
+                <h3 class="h4 mb-3">Host Your Own Events</h3>
+                <p class="text-muted">
+                    Organize and manage your own meetups with our easy-to-use tools. From planning to promotion, we've got you covered.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="mb-5">
+    <h2 class="section-title">How It Works</h2>
+    <div class="row g-4">
+        <div class="col-lg-3 col-md-6">
+            <div class="process-step">
+                <div class="step-number">1</div>
+                <h4>Sign Up</h4>
+                <p class="text-muted">Create your free account and tell us about your interests and location.</p>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="process-step">
+                <div class="step-number">2</div>
+                <h4>Browse Events</h4>
+                <p class="text-muted">Explore meetups and events tailored to your interests and schedule.</p>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="process-step">
+                <div class="step-number">3</div>
+                <h4>Join & Connect</h4>
+                <p class="text-muted">RSVP to events and start connecting with other members.</p>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="process-step">
+                <div class="step-number">4</div>
+                <h4>Grow & Host</h4>
+                <p class="text-muted">Build your network and consider hosting your own events.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="mb-5">
+    <h2 class="section-title">What Our Members Say</h2>
+    <div class="row g-4">
+        <div class="col-lg-4">
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    "MeetHub helped me find my tribe! I've met some amazing people through the tech meetups and even found my current business partner."
+                </div>
+                <div class="testimonial-author">
+                    <i class="fas fa-user-circle me-2"></i>
+                    Sarah Chen, Software Developer
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    "As someone new to the city, MeetHub was a lifesaver. The hiking group I joined has become my closest friends."
+                </div>
+                <div class="testimonial-author">
+                    <i class="fas fa-user-circle me-2"></i>
+                    Mike Rodriguez, Marketing Manager
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    "Hosting events through MeetHub is so easy! I've built a thriving photography community with over 200 members."
+                </div>
+                <div class="testimonial-author">
+                    <i class="fas fa-user-circle me-2"></i>
+                    Emma Thompson, Photographer
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="row align-items-center">
+        <div class="col-lg-8">
+            <h2 class="h1 mb-3">Ready to Start Connecting?</h2>
+            <p class="lead mb-0">
+                Join MeetHub today and discover a world of opportunities to meet, learn, and grow with your community.
+            </p>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+            <a href="{% url 'accounts:signup' %}" class="btn btn-light btn-lg">
+                <i class="fas fa-user-plus me-2"></i>
+                Join Free Now
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="text-center text-white-50 mt-5 pt-4 border-top border-light">
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <h5 class="text-white">MeetHub</h5>
+            <p class="small">Connecting communities, one meetup at a time.</p>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="d-flex justify-content-center justify-content-md-end gap-3">
+                <a href="#" class="text-white-50">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="text-white-50">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="text-white-50">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="text-white-50">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="text-center pt-3 border-top border-light">
+        <p class="small mb-0">© 2025 MeetHub. All rights reserved.</p>
+    </div>
+</footer>
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends "registration/base1.html" %}
+{% load crispy_forms_filters %}
+
+{% block title %}Sign In - MeetHub{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="glass-card">
+            <div class="text-center mb-4">
+                <i class="fas fa-users text-primary" style="font-size: 3rem; opacity: 0.8;"></i>
+                <h2 class="mt-3 mb-2" style="color: var(--dark-color); font-weight: 600;">
+                    Welcome Back!
+                </h2>
+                <p class="text-muted">
+                    Sign in to discover amazing meetups and connect with your community
+                </p>
+            </div>
+
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>Login Failed:</strong> Please check your username and password and try again.
+                </div>
+            {% endif %}
+
+            {% if next %}
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    {% if user.is_authenticated %}
+                        <strong>Access Restricted:</strong> Your account doesn't have access to this page. Please login with an authorized account.
+                    {% else %}
+                        <strong>Authentication Required:</strong> Please sign in to access this page.
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            <form method="post" action="{% url 'accounts:login' %}">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="{{ form.username.id_for_label }}" class="form-label fw-semibold">
+                        <i class="fas fa-user me-2"></i>Username
+                    </label>
+                    <input type="text" 
+                           class="form-control form-control-lg" 
+                           id="{{ form.username.id_for_label }}" 
+                           name="{{ form.username.name }}" 
+                           value="{{ form.username.value|default:'' }}"
+                           placeholder="Enter your username"
+                           required>
+                    {% if form.username.errors %}
+                        <div class="text-danger small mt-1">
+                            {{ form.username.errors.0 }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-4">
+                    <label for="{{ form.password.id_for_label }}" class="form-label fw-semibold">
+                        <i class="fas fa-lock me-2"></i>Password
+                    </label>
+                    <input type="password" 
+                           class="form-control form-control-lg" 
+                           id="{{ form.password.id_for_label }}" 
+                           name="{{ form.password.name }}"
+                           placeholder="Enter your password"
+                           required>
+                    {% if form.password.errors %}
+                        <div class="text-danger small mt-1">
+                            {{ form.password.errors.0 }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <input type="hidden" name="next" value="{{ next }}" />
+
+                <div class="d-grid gap-3">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-sign-in-alt me-2"></i>
+                        Sign In
+                    </button>
+                </div>
+            </form>
+
+            <div class="text-center mt-4 pt-3 border-top">
+                <p class="text-muted mb-3">
+                    New to MeetHub?
+                </p>
+                <a href="{% url 'accounts:signup' %}" class="btn btn-outline-primary">
+                    <i class="fas fa-user-plus me-2"></i>
+                    Create Your Account
+                </a>
+            </div>
+
+            <div class="text-center mt-3">
+                <small class="text-muted">
+                    Forgot your password? 
+                    <a href="#" class="text-link">Reset it here</a>
+                </small>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <p class="text-white-50 small">
+                <i class="fas fa-shield-alt me-1"></i>
+                Your privacy and security are our top priorities
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

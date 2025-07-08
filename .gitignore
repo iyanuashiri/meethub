@@ -111,4 +111,4 @@ pip-selfcheck.json
 share/
 pyvenv.cfg
 .env
-meethub/.env
+config/.env

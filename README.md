@@ -44,7 +44,7 @@ MeetHub is an open source event management system built with Python and Django w
 1. Clone the repository
 ```bash
 git clone https://github.com/iyanuashiri/meethub.git
-cd meethub
+cd config
 ```
 
 2. Create and activate virtual environment

@@ -1,0 +1,38 @@
+{% extends 'events/base.html' %}
+{% load static %}
+{% load cloudinary %}
+    {% block content %}
+     <div class="shadow-lg p-3 mb-5 bg-light rounded">
+        <div class="card">
+            <div class="card-body">
+                {% cloudinary account.profile.photo width=150 height=170 crop="fill" gravity='face' radius='max' %}
+
+                <h2 class="card-text">{{ account.get_full_name }}</h2>
+                <h4 class="card-text">{{ account.email }}</h4>
+                <h1>{{ account.profile.date_of_birth }}</h1>
+                <div class="d-flex justify-content-end">
+                    <a class="btn btn-primary btn active" href="{% url 'profile:edit' %}">Edit Profile</a>
+                </div>
+            </div>
+        </div>
+     </div>
+
+        {% for event in events %}
+            <p></p>
+            <div class="card w-75 mx-auto border-info">
+                <div class="card-body">
+                    <div>
+                        <p class="card-text"><strong>{{ event.venue|upper }}</strong></p>
+                        <h2><a class="card-text text-info" href="{% url 'events:event-detail' event.id %}">{{event.name}}</a></h2>
+                        <p class="card-text"><small class="text-muted">{{ event.time }}</small></p>
+                        <div>
+                            <a href="{% url 'events:event-update' event.id %}" class="btn btn-primary btn-sm active">edit</a>
+                            <a href="{% url 'events:event-delete' event.id %}" class="btn btn-danger btn-sm active">delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+
+    {% endblock %}

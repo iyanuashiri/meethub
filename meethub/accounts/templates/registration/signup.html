@@ -1,0 +1,134 @@
+{% extends 'registration/base1.html' %}
+{% load crispy_forms_filters %}
+
+{% block title %}Join MeetHub - Create Your Account{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="glass-card">
+            <div class="text-center mb-4">
+                <i class="fas fa-rocket text-primary" style="font-size: 3rem; opacity: 0.8;"></i>
+                <h2 class="mt-3 mb-2" style="color: var(--dark-color); font-weight: 600;">
+                    Join MeetHub Today
+                </h2>
+                <p class="text-muted">
+                    Connect with like-minded people, discover exciting events, and grow your network
+                </p>
+            </div>
+
+            <!-- Benefits Section -->
+            <div class="row g-3 mb-4">
+                <div class="col-4 text-center">
+                    <div class="p-3 rounded-3" style="background: rgba(102, 126, 234, 0.1);">
+                        <i class="fas fa-calendar-alt text-primary mb-2" style="font-size: 1.5rem;"></i>
+                        <small class="d-block text-muted fw-semibold">Discover Events</small>
+                    </div>
+                </div>
+                <div class="col-4 text-center">
+                    <div class="p-3 rounded-3" style="background: rgba(102, 126, 234, 0.1);">
+                        <i class="fas fa-users text-primary mb-2" style="font-size: 1.5rem;"></i>
+                        <small class="d-block text-muted fw-semibold">Meet People</small>
+                    </div>
+                </div>
+                <div class="col-4 text-center">
+                    <div class="p-3 rounded-3" style="background: rgba(102, 126, 234, 0.1);">
+                        <i class="fas fa-chart-line text-primary mb-2" style="font-size: 1.5rem;"></i>
+                        <small class="d-block text-muted fw-semibold">Grow Network</small>
+                    </div>
+                </div>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label for="{{ field.id_for_label }}" class="form-label fw-semibold">
+                            {% if field.name == 'username' %}
+                                <i class="fas fa-user me-2"></i>
+                            {% elif field.name == 'email' %}
+                                <i class="fas fa-envelope me-2"></i>
+                            {% elif 'password' in field.name %}
+                                <i class="fas fa-lock me-2"></i>
+                            {% endif %}
+                            {{ field.label }}
+                        </label>
+                        
+                        {% if field.name == 'username' %}
+                            <input type="text" 
+                                   class="form-control form-control-lg" 
+                                   id="{{ field.id_for_label }}" 
+                                   name="{{ field.name }}" 
+                                   value="{{ field.value|default:'' }}"
+                                   placeholder="Choose a unique username"
+                                   required>
+                        {% elif field.name == 'email' %}
+                            <input type="email" 
+                                   class="form-control form-control-lg" 
+                                   id="{{ field.id_for_label }}" 
+                                   name="{{ field.name }}" 
+                                   value="{{ field.value|default:'' }}"
+                                   placeholder="your@email.com"
+                                   required>
+                        {% elif 'password' in field.name %}
+                            <input type="password" 
+                                   class="form-control form-control-lg" 
+                                   id="{{ field.id_for_label }}" 
+                                   name="{{ field.name }}"
+                                   placeholder="Create a strong password"
+                                   required>
+                        {% else %}
+                            {{ field }}
+                        {% endif %}
+                        
+                        {% if field.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ field.errors.0 }}
+                            </div>
+                        {% endif %}
+                        
+                        {% if field.help_text %}
+                            <div class="form-text">
+                                {{ field.help_text|safe }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <div class="d-grid gap-3 mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-user-plus me-2"></i>
+                        Create My Account
+                    </button>
+                </div>
+            </form>
+
+            <div class="text-center mt-4 pt-3 border-top">
+                <p class="text-muted mb-3">
+                    Already have an account?
+                </p>
+                <a href="{% url 'accounts:login' %}" class="btn btn-outline-primary">
+                    <i class="fas fa-sign-in-alt me-2"></i>
+                    Sign In Instead
+                </a>
+            </div>
+
+            <div class="text-center mt-3">
+                <small class="text-muted">
+                    By signing up, you agree to our 
+                    <a href="#" class="text-link">Terms of Service</a> and 
+                    <a href="#" class="text-link">Privacy Policy</a>
+                </small>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <p class="text-white-50 small">
+                <i class="fas fa-heart me-1"></i>
+                Join thousands of members already connecting through MeetHub
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
