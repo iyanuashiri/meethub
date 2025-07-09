@@ -55,7 +55,7 @@ class CommentCreate(SuccessMessageMixin, generic.CreateView):
         form.instance = form.save(commit=False)
         form.instance.event = self.get_object(queryset=Event.objects.all())
         form.instance.created_by = self.request.user
-        create_action(self.request.user, 'added a comment', form.instance)
+        # create_action(self.request.user, 'added a comment', form.instance)
         form.save()
         return super().form_valid(form)
 
