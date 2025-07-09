@@ -1,38 +1,236 @@
 {% extends 'events/base.html' %}
 {% load static %}
 {% load cloudinary %}
-    {% block content %}
-     <div class="shadow-lg p-3 mb-5 bg-light rounded">
-        <div class="card">
-            <div class="card-body">
-                {% cloudinary account.profile.photo width=150 height=170 crop="fill" gravity='face' radius='max' %}
 
-                <h2 class="card-text">{{ account.get_full_name }}</h2>
-                <h4 class="card-text">{{ account.email }}</h4>
-                <h1>{{ account.profile.date_of_birth }}</h1>
-                <div class="d-flex justify-content-end">
-                    <a class="btn btn-primary btn active" href="{% url 'profile:edit' %}">Edit Profile</a>
-                </div>
-            </div>
-        </div>
-     </div>
-
-        {% for event in events %}
-            <p></p>
-            <div class="card w-75 mx-auto border-info">
-                <div class="card-body">
-                    <div>
-                        <p class="card-text"><strong>{{ event.venue|upper }}</strong></p>
-                        <h2><a class="card-text text-info" href="{% url 'events:event-detail' event.id %}">{{event.name}}</a></h2>
-                        <p class="card-text"><small class="text-muted">{{ event.time }}</small></p>
-                        <div>
-                            <a href="{% url 'events:event-update' event.id %}" class="btn btn-primary btn-sm active">edit</a>
-                            <a href="{% url 'events:event-delete' event.id %}" class="btn btn-danger btn-sm active">delete</a>
+{% block content %}
+<div class="container">
+    <!-- Profile Header Card -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-8">
+            <div class="card glass-card">
+                <div class="card-body p-5">
+                    <div class="row align-items-center">
+                        <div class="col-md-4 text-center mb-4 mb-md-0">
+                            <div class="profile-image-container position-relative d-inline-block">
+                                {% cloudinary account.profile.photo width=180 height=180 crop="fill" gravity='face' radius='max' class="profile-image" %}
+                                <div class="profile-image-overlay">
+                                    <i class="fas fa-camera text-white"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="profile-info">
+                                <h2 class="mb-3 text-primary font-weight-bold">{{ account.get_full_name }}</h2>
+                                <div class="profile-details">
+                                    <div class="detail-item mb-3">
+                                        <i class="fas fa-envelope text-muted mr-3"></i>
+                                        <span class="text-dark">{{ account.email }}</span>
+                                    </div>
+                                    {% if account.profile.date_of_birth %}
+                                    <div class="detail-item mb-3">
+                                        <i class="fas fa-birthday-cake text-muted mr-3"></i>
+                                        <span class="text-dark">{{ account.profile.date_of_birth|date:"F d, Y" }}</span>
+                                    </div>
+                                    {% endif %}
+                                    <div class="detail-item mb-4">
+                                        <i class="fas fa-calendar-check text-muted mr-3"></i>
+                                        <span class="text-dark">Joined {{ account.date_joined|date:"F Y" }}</span>
+                                    </div>
+                                </div>
+                                <div class="action-buttons">
+                                    <a class="btn btn-primary" href="{% url 'profile:edit' %}">
+                                        <i class="fas fa-edit mr-2"></i>Edit Profile
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
+    <!-- Events Section -->
+    {% if events %}
+    <div class="row">
+        <div class="col-12">
+            <div class="section-header mb-4">
+                <h3 class="text-white font-weight-bold">
+                    <i class="fas fa-calendar-alt mr-2"></i>My Events
+                </h3>
+                <p class="text-white-50">Events you've created and are managing</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for event in events %}
+        <div class="col-lg-6 col-xl-4 mb-4">
+            <div class="card event-card h-100">
+                <div class="card-body d-flex flex-column">
+                    <div class="event-header mb-3">
+                        <div class="venue-badge mb-2">
+                            <i class="fas fa-map-marker-alt mr-1"></i>
+                            <span class="font-weight-bold">{{ event.venue|upper }}</span>
+                        </div>
+                        <h4 class="card-title mb-0">
+                            <a href="{% url 'events:event-detail' event.id %}" class="text-decoration-none">
+                                {{ event.name }}
+                            </a>
+                        </h4>
+                    </div>
+                    
+                    <div class="event-meta mb-3">
+                        <div class="time-info">
+                            <i class="fas fa-clock text-muted mr-2"></i>
+                            <span class="text-muted">{{ event.time }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="event-actions mt-auto">
+                        <div class="btn-group w-100" role="group">
+                            <a href="{% url 'events:event-update' event.id %}" class="btn btn-outline-primary">
+                                <i class="fas fa-edit mr-1"></i>Edit
+                            </a>
+                            <a href="{% url 'events:event-delete' event.id %}" class="btn btn-outline-danger">
+                                <i class="fas fa-trash mr-1"></i>Delete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         {% endfor %}
+    </div>
+    {% else %}
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card glass-card text-center">
+                <div class="card-body p-5">
+                    <i class="fas fa-calendar-plus text-muted mb-4" style="font-size: 3rem;"></i>
+                    <h4 class="mb-3">No Events Yet</h4>
+                    <p class="text-muted mb-4">You haven't created any events yet. Start connecting with your community!</p>
+                    <a href="{% url 'events:event-create' %}" class="btn btn-primary">
+                        <i class="fas fa-plus mr-2"></i>Create Your First Event
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
 
-    {% endblock %}
+<style>
+    .profile-image-container {
+        position: relative;
+        cursor: pointer;
+    }
+    
+    .profile-image {
+        border: 4px solid white;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease;
+    }
+    
+    .profile-image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(99, 102, 241, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: all 0.3s ease;
+        border-radius: 50%;
+    }
+    
+    .profile-image-container:hover .profile-image-overlay {
+        opacity: 1;
+    }
+    
+    .profile-image-container:hover .profile-image {
+        transform: scale(1.05);
+    }
+    
+    .detail-item {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem 0;
+    }
+    
+    .detail-item i {
+        width: 20px;
+        text-align: center;
+    }
+    
+    .event-card {
+        transition: all 0.3s ease;
+        border: none;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+    }
+    
+    .event-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+    }
+    
+    .venue-badge {
+        display: inline-block;
+        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+    
+    .event-header h4 a {
+        color: var(--dark-color);
+        transition: color 0.3s ease;
+    }
+    
+    .event-header h4 a:hover {
+        color: var(--primary-color);
+    }
+    
+    .time-info {
+        display: flex;
+        align-items: center;
+        font-size: 0.9rem;
+    }
+    
+    .section-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
+    .btn-group .btn {
+        border-radius: 8px;
+        margin: 0 2px;
+    }
+    
+    .btn-outline-primary {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+    
+    .btn-outline-primary:hover {
+        background: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+    
+    .btn-outline-danger {
+        border-color: var(--danger-color);
+        color: var(--danger-color);
+    }
+    
+    .btn-outline-danger:hover {
+        background: var(--danger-color);
+        border-color: var(--danger-color);
+    }
+</style>
+{% endblock %}

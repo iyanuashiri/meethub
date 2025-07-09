@@ -3,21 +3,52 @@
 {% load crispy_forms_filters %}
 
 {% block content %}
-    <div class="w-75 card mx-auto border-dark">
-            <div class="card-body">
-                <h4 class="card-text">{% cloudinary comment.get_comment_creator_photo width=45 height=45 radius='max' crop='fill' %}{{ comment.created_by }}</h4>
-                <p class="card-text">{{ comment.comment }}</p>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Comment Display -->
+            <div class="card glass-card mb-4">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="mr-3">
+                            {% cloudinary comment.get_comment_creator_photo width=50 height=50 radius='max' crop='fill' class='rounded-circle border border-light' %}
+                        </div>
+                        <div class="flex-grow-1">
+                            <h5 class="mb-1 text-dark">{{ comment.created_by|capfirst }}</h5>
+                            <small class="text-muted">
+                                <i class="fas fa-clock mr-1"></i>
+                                {{ comment.created_at|timesince }} ago
+                            </small>
+                        </div>
+                    </div>
+                    <div class="bg-light p-3 rounded">
+                        <p class="mb-0 text-dark">{{ comment.comment }}</p>
+                    </div>
+                </div>
             </div>
+
+            <!-- Add Comment Form -->
+            <div class="card glass-card">
+                <div class="card-header bg-transparent border-0">
+                    <h5 class="mb-0 text-dark">
+                        <i class="fas fa-comment-dots mr-2"></i>Add a Comment
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ form|crispy }}
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="fas fa-paper-plane mr-2"></i>Post Comment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="mx-auto w-100">
-      <form class="mx-auto w-50" method="post"> {% csrf_token %}
-        {{ form|crispy }}
-        <button class="mx-auto btn btn-primary btn-lg active w-25" type="submit">Add comment</button>
-      </form>
-
-
-    </div>
-
-
+</div>
 {% endblock %}

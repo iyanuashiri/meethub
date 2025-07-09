@@ -3,14 +3,317 @@
 {% load crispy_forms_filters %}
 {% load cloudinary %}
 
-
 {% block content %}
-    <div class="mx-auto w-50">
-        <h1>Edit your profile</h1>
-        <form method="post" action="{% url 'profile:edit' %}" enctype="multipart/form-data">{% csrf_token %}
-            {{ user_form|crispy }}
-            {{ profile_form|crispy }}
-            <button class="mx-auto btn btn-primary btn active w-25" type="submit">Save changes</button>
-        </form>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Header Section -->
+            <div class="text-center mb-5">
+                <h1 class="text-white font-weight-bold mb-3">
+                    <i class="fas fa-user-edit mr-3"></i>Edit Your Profile
+                </h1>
+                <p class="text-white-50">Update your information and make your profile shine</p>
+            </div>
+
+            <!-- Edit Form Card -->
+            <div class="card glass-card">
+                <div class="card-body p-5">
+                    <form method="post" action="{% url 'profile:edit' %}" enctype="multipart/form-data" class="profile-edit-form">
+                        {% csrf_token %}
+                        
+                        <!-- Profile Picture Preview Section -->
+                        <div class="profile-preview-section text-center mb-5">
+                            <div class="current-profile-image mb-3">
+                                {% if user.profile.photo %}
+                                    {% cloudinary user.profile.photo width=120 height=120 crop="fill" gravity='face' radius='max' class="profile-preview-img" %}
+                                {% else %}
+                                    <div class="profile-placeholder">
+                                        <i class="fas fa-user-circle text-muted"></i>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <h5 class="text-muted mb-0">Current Profile Picture</h5>
+                        </div>
+
+                        <!-- Form Fields -->
+                        <div class="form-sections">
+                            <!-- Personal Information Section -->
+                            <div class="form-section mb-4">
+                                <div class="section-header mb-3">
+                                    <h4 class="text-primary font-weight-bold">
+                                        <i class="fas fa-user mr-2"></i>Personal Information
+                                    </h4>
+                                    <hr class="section-divider">
+                                </div>
+                                <div class="form-fields">
+                                    {{ user_form|crispy }}
+                                </div>
+                            </div>
+
+                            <!-- Profile Details Section -->
+                            <div class="form-section mb-4">
+                                <div class="section-header mb-3">
+                                    <h4 class="text-primary font-weight-bold">
+                                        <i class="fas fa-id-card mr-2"></i>Profile Details
+                                    </h4>
+                                    <hr class="section-divider">
+                                </div>
+                                <div class="form-fields">
+                                    {{ profile_form|crispy }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="form-actions text-center pt-4">
+                            <div class="btn-group-custom">
+                                <a href="{% url 'profile:detail' user.id %}" class="btn btn-outline-secondary btn-lg mr-3">
+                                    <i class="fas fa-times mr-2"></i>Cancel
+                                </a>
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-save mr-2"></i>Save Changes
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Help Section -->
+            <div class="card glass-card mt-4">
+                <div class="card-body p-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-2 text-center">
+                            <i class="fas fa-info-circle text-primary" style="font-size: 2rem;"></i>
+                        </div>
+                        <div class="col-md-10">
+                            <h6 class="font-weight-bold mb-2">Profile Tips</h6>
+                            <p class="text-muted mb-0">
+                                A complete profile helps others connect with you better. Add a profile picture and 
+                                keep your information up to date to make the most of your MeetHub experience.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
+
+<style>
+    .profile-edit-form {
+        position: relative;
+    }
+    
+    .profile-preview-section {
+        position: relative;
+        padding: 2rem 0;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .profile-preview-img {
+        border: 4px solid white;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease;
+    }
+    
+    .profile-placeholder {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: var(--light-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        border: 4px solid white;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .profile-placeholder i {
+        font-size: 4rem;
+    }
+    
+    .form-section {
+        position: relative;
+        padding: 1.5rem 0;
+    }
+    
+    .section-header h4 {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 0;
+    }
+    
+    .section-divider {
+        margin-top: 0.5rem;
+        margin-bottom: 0;
+        border-top: 2px solid var(--primary-color);
+        width: 50px;
+    }
+    
+    .form-fields {
+        margin-top: 1.5rem;
+    }
+    
+    /* Custom form styling */
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+        font-weight: 600;
+        color: var(--dark-color);
+        margin-bottom: 0.5rem;
+    }
+    
+    .form-control {
+        border-radius: 8px;
+        border: 2px solid var(--border-color);
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
+        transform: translateY(-1px);
+    }
+    
+    .form-control-file {
+        border: 2px dashed var(--border-color);
+        border-radius: 8px;
+        padding: 1rem;
+        background: var(--light-color);
+        transition: all 0.3s ease;
+    }
+    
+    .form-control-file:hover {
+        border-color: var(--primary-color);
+        background: rgba(99, 102, 241, 0.05);
+    }
+    
+    .form-actions {
+        border-top: 1px solid var(--border-color);
+        margin-top: 2rem;
+    }
+    
+    .btn-group-custom {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .btn-lg {
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 8px;
+        min-width: 150px;
+    }
+    
+    .btn-outline-secondary {
+        border: 2px solid var(--text-muted);
+        color: var(--text-muted);
+        background: transparent;
+    }
+    
+    .btn-outline-secondary:hover {
+        background: var(--text-muted);
+        color: white;
+        transform: translateY(-2px);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .btn-group-custom {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .btn-lg {
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .form-section {
+            padding: 1rem 0;
+        }
+        
+        .profile-preview-section {
+            padding: 1rem 0;
+        }
+    }
+    
+    /* Enhanced form validation styling */
+    .is-invalid {
+        border-color: var(--danger-color);
+        animation: shake 0.5s ease-in-out;
+    }
+    
+    .invalid-feedback {
+        color: var(--danger-color);
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+    
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+    }
+    
+    /* Loading state for submit button */
+    .btn-primary:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+    
+    .btn-primary:disabled::after {
+        content: '';
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        margin-left: 8px;
+        border: 2px solid #ffffff;
+        border-radius: 50%;
+        border-top-color: transparent;
+        animation: spin 0.8s linear infinite;
+    }
+    
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+</style>
+
+<script>
+    // Add some interactive enhancements
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add smooth scrolling to form sections
+        const form = document.querySelector('.profile-edit-form');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                const submitBtn = this.querySelector('button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Saving...';
+                }
+            });
+        }
+        
+        // Add focus effects to form fields
+        const formControls = document.querySelectorAll('.form-control');
+        formControls.forEach(control => {
+            control.addEventListener('focus', function() {
+                this.closest('.form-group').classList.add('focused');
+            });
+            
+            control.addEventListener('blur', function() {
+                this.closest('.form-group').classList.remove('focused');
+            });
+        });
+    });
+</script>
 {% endblock %}
