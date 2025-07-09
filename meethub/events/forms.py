@@ -1,25 +1,22 @@
 from django import forms
 
-from tinymce import TinyMCE
-
-from meethub.events.models import Event
-
-
-class TinyMCEWidget(TinyMCE):
-    def use_required_attribute(self, *args):
-        return False
+from meethub.events.models import Event, Category
 
 
 class EventForm(forms.ModelForm):
-    details = forms.CharField(
-        widget=TinyMCEWidget(
-            attrs={'required':False, 'cols':30, 'rows':10}
-        )
+    category = forms.ModelChoiceField(
+        queryset=Category.objects.all(),
+        empty_label="Select a category",
+        widget=forms.Select(attrs={'class': 'form-control'})
     )
 
     class Meta:
         model = Event
         fields = ('category', 'name', 'details', 'venue', 'time', 'date',)
-
-
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'venue': forms.TextInput(attrs={'class': 'form-control'}),
+            'date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'time': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
+        }
 

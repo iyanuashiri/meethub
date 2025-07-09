@@ -13,6 +13,7 @@ from meethub.comments.models import Comment
 from meethub.comments.forms import CommentForm
 
 from meethub.events.models import Event
+from meethub.events.forms import EventForm
 
 
 # Create your views here.
@@ -76,18 +77,20 @@ class EventDetail(LoginRequiredMixin, View):
 class EventFormMixin(object):
     def form_valid(self, form):
         form.instance.creator = self.request.user
+        response = super().form_valid(form)
         create_action(self.request.user, 'created a new event', form.instance)
-        return super().form_valid(form)
+        return response
 
 
 class EventCreate(LoginRequiredMixin, SuccessMessageMixin, EventFormMixin, generic.CreateView):
     model = Event
     template_name = 'events/create_form.html'
-    fields = ('category', 'name', 'details', 'venue', 'time', 'date')
+    form_class = EventForm
+    # fields = ('category', 'name', 'details', 'venue', 'time', 'date')
     context_object_name = 'event'
     success_message = "%(name)s was created successfully"
 
-
+    
 class EventUpdate(LoginRequiredMixin, SuccessMessageMixin, EventFormMixin, generic.UpdateView):
     model = Event
     template_name = 'events/update_form.html'
