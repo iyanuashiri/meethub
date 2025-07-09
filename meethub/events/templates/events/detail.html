@@ -4,102 +4,235 @@
 {% load crispy_forms_filters %}
 {% load cloudinary %}
 
+{% block title %}{{ event.name }} - MeetHub{% endblock %}
 
-  {% block content %}
-      <div class="card">
-        <div class="card-body">
-            <h3 class="card-text"><small>Organizer: {{ event.creator|capfirst }}</small></h3>
-            <h1 class="card-text">{{ event.name }}</h1>
-            <h3 class="card-text text-muted float-left">{{ event.date }}; </h3>
-
-            <h3 class="card-text text-muted">{{ event.time }}</h3>
-            {% if request.user in attending %}
-                <a class="btn btn-danger btn active w-25" href="{% url 'events:not_attend_event' event.id %}">Not Attending</a>
-            {% else %}
-                <a class="btn btn-success btn active w-25" href="{% url 'events:attend_event' event.id %}">Attend</a>
-
-            {% endif %}
-        </div>
-      </div>
-
-      <div class="jumbotron w-75 mx-auto">
-        <h1 class="display-4">Details</h1>
-        <p class="lead">{{ event.details|safe }}</p>
-      </div>
-
-
-
-    <div class="mx-auto w-75">
-        <h2>{{ event.get_number_of_attendees }} Attending</h2>
-            <div class="card card-body">
-                {% for attendee in attending %}
-                    <p>{{ attendee.username|capfirst }}</p>
-
-                {% endfor %}
-
+{% block content %}
+<div class="container">
+    <!-- Event Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card glass-card">
+                <div class="card-body p-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="mr-3">
+                                    <i class="fas fa-calendar-alt text-primary" style="font-size: 2rem;"></i>
+                                </div>
+                                <div>
+                                    <h6 class="text-muted mb-1">
+                                        <i class="fas fa-user-tie mr-1"></i>Organized by
+                                    </h6>
+                                    <h5 class="mb-0 text-primary font-weight-bold">{{ event.creator|capfirst }}</h5>
+                                </div>
+                            </div>
+                            
+                            <h1 class="display-4 font-weight-bold text-dark mb-3">{{ event.name }}</h1>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-2">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-calendar text-primary mr-2"></i>
+                                        <span class="h5 text-dark mb-0">{{ event.date }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-clock text-primary mr-2"></i>
+                                        <span class="h5 text-dark mb-0">{{ event.time }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {% if event.venue %}
+                            <div class="mt-3">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-map-marker-alt text-primary mr-2"></i>
+                                    <span class="h6 text-dark mb-0">{{ event.venue }}</span>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="col-md-4 text-center">
+                            <div class="mb-3">
+                                <div class="display-4 font-weight-bold text-primary">{{ event.get_number_of_attendees }}</div>
+                                <div class="text-muted">People Attending</div>
+                            </div>
+                            
+                            {% if request.user in attending %}
+                                <a class="btn btn-danger btn-lg w-100 mb-3" href="{% url 'events:not_attend_event' event.id %}">
+                                    <i class="fas fa-times mr-2"></i>Cancel Attendance
+                                </a>
+                            {% else %}
+                                <a class="btn btn-success btn-lg w-100 mb-3" href="{% url 'events:attend_event' event.id %}">
+                                    <i class="fas fa-check mr-2"></i>Join Event
+                                </a>
+                            {% endif %}
+                            
+                            {% if event.creator == request.user %}
+                            <div class="btn-group w-100" role="group">
+                                <a href="{% url 'events:event-update' event.id %}" class="btn btn-outline-primary">
+                                    <i class="fas fa-edit mr-1"></i>Edit
+                                </a>
+                                <a href="{% url 'events:event-delete' event.id %}" class="btn btn-outline-danger">
+                                    <i class="fas fa-trash mr-1"></i>Delete
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div>
-        <h2 class="w-75 mx-auto">{{ event.get_comments_number }} Comments</h2>
-      {% for comment in comments %}
-          {% if not comment.get_parents %}
+    <!-- Event Details -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="jumbotron">
+                <div class="container">
+                    <h1 class="display-4 text-dark mb-4">
+                        <i class="fas fa-info-circle mr-3"></i>Event Details
+                    </h1>
+                    <div class="lead text-dark">{{ event.details|safe }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-              <div class="media card w-75 mx-auto border-dark">
-                <div class="media-body card-body">
-                    <h4 class="card-text">{% cloudinary comment.get_comment_creator_photo width=45 height=45 radius='max' crop='fill' %}{{ comment.created_by }}</h4>
-                    <p class="card-text">{{ comment.comment }}</p>
-                    <a href="{% url 'comments:comment-detail' comment.id event.id %}">Reply</a>
-
-                    {% if comment.get_children %}
-
-                    <div class="media card mx-auto">
-                        <div class="media-body card-body">
-                            {% for child in comment.get_children %}
-                                <h4 class="card-text">{% cloudinary child.get_comment_creator_photo width=45 height=45 radius='max' crop='fill' %}{{ child.created_by }}</h4>
-                                <p class="card-text">{{ child.comment }}</p>
-                                <a href="{% url 'comments:comment-detail' child.id event.id %}">Reply</a>
-
-                                {% if child.get_children %}
-
-                                <div class="media card mx-auto">
-                                    <div class="media-body card-body">
-                                        {% for grandchild in child.get_children %}
-                                            <h4 class="card-text">{% cloudinary comment.get_comment_creator_photo width=45 height=45 radius='max' crop='fill' %}{{ grandchild.created_by }}</h4>
-                                            <p class="card-text">{{ grandchild.comment }}</p>
-                                        {% endfor %}
-
+    <!-- Attendees Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card glass-card">
+                <div class="card-header bg-transparent border-0 pb-0">
+                    <h2 class="text-dark mb-0">
+                        <i class="fas fa-users mr-2"></i>{{ event.get_number_of_attendees }} Amazing People Attending
+                    </h2>
+                </div>
+                <div class="card-body">
+                    {% if attending %}
+                        <div class="row">
+                            {% for attendee in attending %}
+                            <div class="col-md-4 col-sm-6 mb-3">
+                                <div class="d-flex align-items-center p-3 border rounded">
+                                    <div class="mr-3">
+                                        <i class="fas fa-user-circle text-primary" style="font-size: 2rem;"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0 font-weight-bold">{{ attendee.username|capfirst }}</h6>
+                                        <small class="text-muted">Attendee</small>
                                     </div>
                                 </div>
-                                {% else %}
-                                {% endif %}
+                            </div>
                             {% endfor %}
                         </div>
                     {% else %}
+                        <div class="text-center py-5">
+                            <i class="fas fa-users text-muted" style="font-size: 4rem;"></i>
+                            <h4 class="text-muted mt-3">No one has joined yet</h4>
+                            <p class="text-muted">Be the first to join this exciting event!</p>
+                        </div>
                     {% endif %}
-                    </div>
                 </div>
-              </div>
-              <br>
-          {% endif %}
-
-
-      {%  endfor %}
-
+            </div>
+        </div>
     </div>
 
-    <div>
+    <!-- Comments Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card glass-card">
+                <div class="card-header bg-transparent border-0 pb-0">
+                    <h2 class="text-dark mb-0">
+                        <i class="fas fa-comments mr-2"></i>{{ event.get_comments_number }} Comments
+                    </h2>
+                </div>
+                <div class="card-body">
+                    {% for comment in comments %}
+                        {% if not comment.get_parents %}
+                            <div class="media mb-4 p-3 border rounded">
+                                <div class="media-object mr-3">
+                                    {% cloudinary comment.get_comment_creator_photo width=50 height=50 radius='max' crop='fill' %}
+                                </div>
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-2 text-primary font-weight-bold">{{ comment.created_by|capfirst }}</h5>
+                                    <p class="text-dark mb-3">{{ comment.comment }}</p>
+                                    <a href="{% url 'comments:comment-detail' comment.id event.id %}" class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-reply mr-1"></i>Reply
+                                    </a>
 
+                                    {% if comment.get_children %}
+                                        <div class="mt-3">
+                                            {% for child in comment.get_children %}
+                                                <div class="media mt-3 ml-4 p-3 bg-light rounded">
+                                                    <div class="media-object mr-3">
+                                                        {% cloudinary child.get_comment_creator_photo width=40 height=40 radius='max' crop='fill' %}
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h6 class="mt-0 mb-2 text-primary font-weight-bold">{{ child.created_by|capfirst }}</h6>
+                                                        <p class="text-dark mb-2">{{ child.comment }}</p>
+                                                        <a href="{% url 'comments:comment-detail' child.id event.id %}" class="btn btn-sm btn-outline-primary">
+                                                            <i class="fas fa-reply mr-1"></i>Reply
+                                                        </a>
+
+                                                        {% if child.get_children %}
+                                                            <div class="mt-3">
+                                                                {% for grandchild in child.get_children %}
+                                                                    <div class="media mt-2 ml-4 p-2 bg-white rounded border">
+                                                                        <div class="media-object mr-2">
+                                                                            {% cloudinary grandchild.get_comment_creator_photo width=30 height=30 radius='max' crop='fill' %}
+                                                                        </div>
+                                                                        <div class="media-body">
+                                                                            <h6 class="mt-0 mb-1 text-primary font-weight-bold">{{ grandchild.created_by|capfirst }}</h6>
+                                                                            <p class="text-dark mb-0">{{ grandchild.comment }}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endfor %}
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% empty %}
+                        <div class="text-center py-5">
+                            <i class="fas fa-comments text-muted" style="font-size: 4rem;"></i>
+                            <h4 class="text-muted mt-3">No comments yet</h4>
+                            <p class="text-muted">Start the conversation about this event!</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="mx-auto w-100">
-      <form class="mx-auto w-50" method="post"> {% csrf_token %}
-        {{ form|crispy }}
-        <button class="mx-auto btn btn-primary btn-lg active w-25" type="submit">Add comment</button>
-      </form>
-
-
+    <!-- Add Comment Form -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card glass-card">
+                <div class="card-header bg-transparent border-0">
+                    <h4 class="text-dark mb-0">
+                        <i class="fas fa-plus-circle mr-2"></i>Join the Conversation
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            {{ form|crispy }}
+                        </div>
+                        <button class="btn btn-primary btn-lg" type="submit">
+                            <i class="fas fa-paper-plane mr-2"></i>Share Your Thoughts
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-
-  {% endblock %}
+</div>
+{% endblock %}

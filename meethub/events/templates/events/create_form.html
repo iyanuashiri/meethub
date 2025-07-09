@@ -2,16 +2,299 @@
 {% load static %}
 {% load crispy_forms_filters %}
 
+{% block title %}Create Amazing Event - MeetHub{% endblock %}
 
-  {% block content %}
-      
-      <div class="mx-auto w-75">
-          <h1>Congratulations, You want to create an event</h1>
-          <form method="post" > {% csrf_token %}
-            {{ form|crispy }}
-            <button class="mx-auto btn btn-primary btn active w-25" type="submit"> Create</button>
-          </form>
-      </div>
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Header Section -->
+            <div class="text-center mb-5">
+                <div class="jumbotron">
+                    <div class="container">
+                        <h1 class="display-4 font-weight-bold text-dark mb-4">
+                            <i class="fas fa-magic mr-3"></i>Create Your Amazing Event
+                        </h1>
+                        <p class="lead text-dark mb-0">
+                            Ready to bring people together? Let's create something extraordinary that will leave lasting memories and meaningful connections.
+                        </p>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Creation Form -->
+            <div class="card glass-card">
+                <div class="card-header bg-transparent border-0 text-center py-4">
+                    <h3 class="text-dark mb-0">
+                        <i class="fas fa-calendar-plus mr-2"></i>Event Details
+                    </h3>
+                    <p class="text-muted mt-2">Fill in the details below to create your event</p>
+                </div>
+                
+                <div class="card-body p-4">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <!-- Progress Steps -->
+                        <div class="mb-4">
+                            <div class="row text-center">
+                                <div class="col-4">
+                                    <div class="step-indicator active">
+                                        <div class="step-number">1</div>
+                                        <div class="step-label">Basic Info</div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="step-indicator">
+                                        <div class="step-number">2</div>
+                                        <div class="step-label">Details</div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="step-indicator">
+                                        <div class="step-number">3</div>
+                                        <div class="step-label">Publish</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-  {% endblock %}
+                        <!-- Form Fields -->
+                        <div class="form-section mb-4">
+                            <h5 class="text-dark mb-3">
+                                <i class="fas fa-info-circle mr-2"></i>Event Information
+                            </h5>
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    {{ form.name|as_crispy_field }}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    {{ form.date|as_crispy_field }}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    {{ form.time|as_crispy_field }}
+                                </div>
+                                <div class="col-12 mb-3">
+                                    {{ form.venue|as_crispy_field }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section mb-4">
+                            <h5 class="text-dark mb-3">
+                                <i class="fas fa-align-left mr-2"></i>Event Description
+                            </h5>
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    {{ form.details|as_crispy_field }}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    {{ form.category|as_crispy_field }}
+                                </div>
+                            </div>
+
+                            <!-- <div class="row">
+                                <div class="col-12 mb-3">
+                                    {% if debug_info %}
+                                    <div class="alert alert-info">
+                                        <strong>Debug Info:</strong>
+                                        <p>Categories in database: {{ debug_info.categories_count }} ({{ debug_info.categories|join:", " }})</p>
+                                        <p>Form category field: {{ form.category }}</p>
+                                        <p>Form category field choices: {{ form.fields.category.queryset|length }}</p>
+                                    </div>
+                                    {% endif %}
+                                    {{ form.category|as_crispy_field }}
+                                </div>
+                            </div> -->
+
+                            <!-- <div class="row">
+                                <div class="col-12 mb-3">
+                                    <label for="{{ form.category.id_for_label }}" class="form-label">Category</label>
+                                    <select name="category" class="form-select" required id="{{ form.category.id_for_label }}">
+                                        <option value="" selected>---------</option>
+                                        {% for category in categories %}
+                                            <option value="{{ category.id }}">{{ category.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    {% if form.category.help_text %}
+                                        <small class="form-text text-muted">{{ form.category.help_text }}</small>
+                                    {% endif %}
+                                    {% if form.category.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.category.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div> -->
+                        </div>
+
+                        {% comment %} {% if form.image %}
+                        <div class="form-section mb-4">
+                            <h5 class="text-dark mb-3">
+                                <i class="fas fa-image mr-2"></i>Event Image
+                            </h5>
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    {{ form.image|as_crispy_field }}
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %} {% endcomment %}
+
+                        <!-- Action Buttons -->
+                        <div class="text-center mt-5">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <a href="{% url 'events:event-list' %}" class="btn btn-outline-secondary btn-lg w-100">
+                                        <i class="fas fa-arrow-left mr-2"></i>Back to Events
+                                    </a>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                                        <i class="fas fa-rocket mr-2"></i>Create Event
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Tips Section -->
+            <div class="card glass-card mt-4">
+                <div class="card-body">
+                    <h5 class="text-dark mb-3">
+                        <i class="fas fa-lightbulb mr-2"></i>Tips for Creating Great Events
+                    </h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="fas fa-check text-success mr-2"></i>
+                                    <strong>Be descriptive:</strong> Help people understand what to expect
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check text-success mr-2"></i>
+                                    <strong>Choose the right time:</strong> Consider your audience's schedule
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check text-success mr-2"></i>
+                                    <strong>Clear location:</strong> Provide detailed venue information
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="fas fa-check text-success mr-2"></i>
+                                    <strong>Engaging title:</strong> Make it catchy and memorable
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check text-success mr-2"></i>
+                                    <strong>Add visuals:</strong> Include images that represent your event
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check text-success mr-2"></i>
+                                    <strong>Plan ahead:</strong> Give people time to discover and plan
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .step-indicator {
+        position: relative;
+        margin-bottom: 1rem;
+    }
+    
+    .step-number {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #e5e7eb;
+        color: #6b7280;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin: 0 auto 0.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .step-indicator.active .step-number {
+        background: var(--primary-color);
+        color: white;
+    }
+    
+    .step-label {
+        font-size: 0.9rem;
+        color: #6b7280;
+        font-weight: 500;
+    }
+    
+    .step-indicator.active .step-label {
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+    
+    .form-section {
+        position: relative;
+        padding: 1.5rem;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .form-section h5 {
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-control {
+        border-radius: 8px;
+        border: 2px solid var(--border-color);
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+    }
+    
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
+    }
+    
+    textarea.form-control {
+        min-height: 120px;
+        resize: vertical;
+    }
+    
+    .btn-lg {
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+    
+    .list-unstyled li {
+        position: relative;
+        padding-left: 0;
+    }
+    
+    .list-unstyled li .fas {
+        position: absolute;
+        left: 0;
+        top: 0.2rem;
+    }
+    
+    .list-unstyled li {
+        padding-left: 2rem;
+    }
+</style>
+{% endblock %}

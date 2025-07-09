@@ -2,14 +2,198 @@
 {% load static %}
 {% load crispy_forms_filters %}
 
-  {% block content %}
-      {{ form.media }}
-      <div class="jumbotron">
-      <div class="mx-auto w-75">
-        <form method="post">{% csrf_token %}
-            {{ form|crispy }}
-            <input class="mx-auto btn btn-primary btn active w-25" type="submit" value="Update" />
-        </form>
-      </div>
-      </div>
-  {% endblock %}
+{% block title %}Update {{ event.name }} - MeetHub{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Header Section -->
+            <div class="text-center mb-5">
+                <div class="jumbotron">
+                    <div class="container">
+                        <h1 class="display-4 font-weight-bold text-dark mb-4">
+                            <i class="fas fa-edit mr-3"></i>Update Your Event
+                        </h1>
+                        <p class="lead text-dark mb-0">
+                            Make changes to "<strong>{{ event.name }}</strong>" and keep your attendees informed about the latest updates.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Update Form -->
+            <div class="card glass-card">
+                <div class="card-header bg-transparent border-0 text-center py-4">
+                    <h3 class="text-dark mb-0">
+                        <i class="fas fa-calendar-alt mr-2"></i>Event Details
+                    </h3>
+                    <p class="text-muted mt-2">Update the information below to modify your event</p>
+                </div>
+                
+                <div class="card-body p-4">
+                   
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <!-- Current Event Info -->
+                        <div class="alert alert-info mb-4">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <h6 class="mb-1"><i class="fas fa-info-circle mr-2"></i>Currently Editing</h6>
+                                    <strong>{{ event.name }}</strong>
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <small class="text-muted">
+                                        <i class="fas fa-users mr-1"></i>{{ event.get_number_of_attendees }} attending
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form Fields -->
+                        <div class="form-section mb-4">
+                            <h5 class="text-dark mb-3">
+                                <i class="fas fa-info-circle mr-2"></i>Event Information
+                            </h5>
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    {{ form.name|as_crispy_field }}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    {{ form.date|as_crispy_field }}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    {{ form.time|as_crispy_field }}
+                                </div>
+                                <div class="col-12 mb-3">
+                                    {{ form.venue|as_crispy_field }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section mb-4">
+                            <h5 class="text-dark mb-3">
+                                <i class="fas fa-align-left mr-2"></i>Event Description
+                            </h5>
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    {{ form.details|as_crispy_field }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- {% if form.image %}
+                        <div class="form-section mb-4">
+                            <h5 class="text-dark mb-3">
+                                <i class="fas fa-image mr-2"></i>Event Image
+                            </h5>
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    {{ form.image|as_crispy_field }}
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %} -->
+
+                        <!-- Action Buttons -->
+                        <div class="text-center mt-5">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <a href="{% url 'events:event-detail' event.id %}" class="btn btn-outline-secondary btn-lg w-100">
+                                        <i class="fas fa-arrow-left mr-2"></i>Cancel
+                                    </a>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <a href="{% url 'events:event-delete' event.id %}" class="btn btn-outline-danger btn-lg w-100">
+                                        <i class="fas fa-trash mr-2"></i>Delete Event
+                                    </a>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                                        <i class="fas fa-save mr-2"></i>Update Event
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Update Notice -->
+            <div class="card glass-card mt-4">
+                <div class="card-body">
+                    <h5 class="text-dark mb-3">
+                        <i class="fas fa-bell mr-2"></i>Important Notice
+                    </h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-start mb-3">
+                                <i class="fas fa-users text-primary mr-3 mt-1"></i>
+                                <div>
+                                    <h6 class="mb-1">Notify Attendees</h6>
+                                    <p class="text-muted mb-0">All attendees will be automatically notified of any changes you make to this event.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-start mb-3">
+                                <i class="fas fa-clock text-warning mr-3 mt-1"></i>
+                                <div>
+                                    <h6 class="mb-1">Time-sensitive Changes</h6>
+                                    <p class="text-muted mb-0">Be mindful when changing dates or times, as attendees may have already made plans.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-section {
+        position: relative;
+        padding: 1.5rem;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .form-section h5 {
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-control {
+        border-radius: 8px;
+        border: 2px solid var(--border-color);
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+    }
+    
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
+    }
+    
+    textarea.form-control {
+        min-height: 120px;
+        resize: vertical;
+    }
+    
+    .btn-lg {
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+    
+    .alert-info {
+        background: linear-gradient(45deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        border-radius: 12px;
+    }
+</style>
+{% endblock %}

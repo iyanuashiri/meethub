@@ -1,11 +1,150 @@
 {% extends 'events/base.html' %}
-  {% block content %}
-      <div class="jumbotron">
-      <div class="mx-auto w-50 shadow-sm">
-          <form action="" method="post">{% csrf_token %}
-            <p>Are you sure you want to delete "{{ event }}"?</p>
-            <input class="mx-auto btn btn-danger btn active w-25" type="submit" value="Confirm" />
-          </form>
-      </div>
-      </div>
-  {% endblock %}
+
+{% block title %}Delete {{ event.name }} - MeetHub{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <!-- Warning Header -->
+            <div class="text-center mb-4">
+                <div class="alert alert-warning border-0 shadow-sm">
+                    <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
+                    <h2 class="font-weight-bold text-dark mb-2">Confirm Deletion</h2>
+                    <p class="mb-0">This action cannot be undone. Please proceed with caution.</p>
+                </div>
+            </div>
+
+            <!-- Deletion Form -->
+            <div class="card glass-card">
+                <div class="card-header bg-transparent border-0 text-center py-4">
+                    <h4 class="text-dark mb-0">
+                        <i class="fas fa-trash-alt mr-2"></i>Delete Event
+                    </h4>
+                </div>
+                
+                <div class="card-body p-4">
+                    <!-- Event Information -->
+                    <div class="alert alert-light border mb-4">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h5 class="mb-2 text-dark">
+                                    <i class="fas fa-calendar-alt mr-2"></i>{{ event.name }}
+                                </h5>
+                                <div class="text-muted">
+                                    <small>
+                                        <i class="fas fa-clock mr-1"></i>{{ event.date }} at {{ event.time }}
+                                    </small>
+                                    {% if event.venue %}
+                                    <br>
+                                    <small>
+                                        <i class="fas fa-map-marker-alt mr-1"></i>{{ event.venue }}
+                                    </small>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-right">
+                                <div class="text-muted">
+                                    <i class="fas fa-users mr-1"></i>
+                                    <span class="font-weight-bold">{{ event.get_number_of_attendees }}</span> attending
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Warning Message -->
+                    <div class="text-center mb-4">
+                        <h5 class="text-danger mb-3">
+                            <i class="fas fa-exclamation-circle mr-2"></i>
+                            Are you sure you want to delete "{{ event.name }}"?
+                        </h5>
+                        <p class="text-muted mb-0">
+                            This will permanently remove the event and all associated data. 
+                            {% if event.get_number_of_attendees > 0 %}
+                                <strong>{{ event.get_number_of_attendees }} attendee{{ event.get_number_of_attendees|pluralize }}</strong> will be notified about the cancellation.
+                            {% endif %}
+                        </p>
+                    </div>
+
+                    <!-- Consequences List -->
+                    <div class="mb-4">
+                        <h6 class="text-dark mb-3">
+                            <i class="fas fa-list-ul mr-2"></i>What happens when you delete this event:
+                        </h6>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <i class="fas fa-times text-danger mr-2"></i>
+                                The event will be permanently removed from MeetHub
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-times text-danger mr-2"></i>
+                                All comments and discussions will be deleted
+                            </li>
+                            {% if event.get_number_of_attendees > 0 %}
+                            <li class="mb-2">
+                                <i class="fas fa-bell text-warning mr-2"></i>
+                                All attendees will receive a cancellation notification
+                            </li>
+                            {% endif %}
+                            <li class="mb-2">
+                                <i class="fas fa-times text-danger mr-2"></i>
+                                This action cannot be undone
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <form method="post" class="text-center">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <a href="{% url 'events:event-detail' event.id %}" class="btn btn-outline-secondary btn-lg w-100">
+                                    <i class="fas fa-arrow-left mr-2"></i>Keep Event
+                                </a>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <button type="submit" class="btn btn-danger btn-lg w-100">
+                                    <i class="fas fa-trash-alt mr-2"></i>Delete Forever
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Safety Notice -->
+            <div class="card glass-card mt-4">
+                <div class="card-body text-center">
+                    <h6 class="text-dark mb-3">
+                        <i class="fas fa-shield-alt mr-2"></i>Need to make changes instead?
+                    </h6>
+                    <p class="text-muted mb-3">
+                        If you're looking to update event details, consider editing instead of deleting.
+                    </p>
+                    <a href="{% url 'events:event-update' event.id %}" class="btn btn-primary">
+                        <i class="fas fa-edit mr-2"></i>Edit Event Instead
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .btn-lg {
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+    
+    .alert-warning {
+        background: linear-gradient(45deg, rgba(245, 158, 11, 0.1), rgba(251, 191, 36, 0.1));
+        border: 1px solid rgba(245, 158, 11, 0.3);
+        border-radius: 16px;
+    }
+    
+    .alert-light {
+        background: rgba(248, 250, 252, 0.8);
+        border: 1px solid rgba(226, 232, 240, 0.8);
+        border-radius: 12px;
+    }

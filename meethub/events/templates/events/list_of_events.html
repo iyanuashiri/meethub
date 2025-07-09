@@ -1,22 +1,228 @@
 {% extends 'events/base.html' %}
 {% load events_filters %}
 
-    {% block content %}
-        {% for event in events %}
-            <p class="mx-auto w-75"><strong>{{ event.date }}</strong></p>
-            <div class="card w-75 mx-auto border-info">
-                <div class="card-body">
-                    <div>
-                        <p class="card-text"><strong>{{ event.venue|upper }}</strong> - <small class="text-muted">{{ event.time }}</small></p>
-                        <h2><a class="card-text text-info" href="{% url 'events:event-detail' event.id %}">{{event.name}}</a></h2>
-                        <p>{{event.details|safe|truncatewords_html:25}}</p>
-                        <span class="card-text"><strong>{{ event.get_number_of_attendees }}</strong> Attending</span>
+{% block title %}Discover Amazing Events - MeetHub{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Hero Section -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="jumbotron text-center">
+                <div class="container">
+                    <h1 class="display-3 font-weight-bold text-dark mb-4">
+                        <i class="fas fa-calendar-star mr-3"></i>Discover Amazing Events
+                    </h1>
+                    <p class="lead text-dark mb-4">
+                        Connect with your community, discover new experiences, and make lasting memories at incredible events near you.
+                    </p>
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <a href="{% url 'events:event-create' %}" class="btn btn-primary btn-lg mr-3">
+                                <i class="fas fa-plus-circle mr-2"></i>Create Your Event
+                            </a>
+                            <a href="#events" class="btn btn-outline-dark btn-lg">
+                                <i class="fas fa-search mr-2"></i>Browse Events
+                            </a>
+                        </div>
                     </div>
-
-
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Events Section -->
+    <div class="row mb-4" id="events">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="text-dark font-weight-bold">
+                    <i class="fas fa-fire mr-2"></i>Trending Events
+                </h2>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-outline-primary active">
+                        <i class="fas fa-th-large mr-1"></i>Grid
+                    </button>
+                    <button type="button" class="btn btn-outline-primary">
+                        <i class="fas fa-list mr-1"></i>List
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Events Grid -->
+    <div class="row">
+        {% for event in events %}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-gradient-primary text-white border-0">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h6 class="mb-0">
+                                <i class="fas fa-calendar-alt mr-2"></i>{{ event.date }}
+                            </h6>
+                        </div>
+                        <div class="col-4 text-right">
+                            <span class="badge badge-light">
+                                <i class="fas fa-clock mr-1"></i>{{ event.time }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-body d-flex flex-column">
+                    {% if event.venue %}
+                    <div class="mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-map-marker-alt text-primary mr-2"></i>
+                            <span class="font-weight-bold text-uppercase">{{ event.venue }}</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <h4 class="card-title font-weight-bold text-dark mb-3">
+                        <a href="{% url 'events:event-detail' event.id %}" class="text-decoration-none text-dark">
+                            {{ event.name }}
+                        </a>
+                    </h4>
+                    
+                    <div class="card-text text-muted mb-3 flex-grow-1">
+                        {{ event.details|safe|truncatewords_html:20 }}
+                    </div>
+                    
+                    <div class="mt-auto">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-users text-primary mr-2"></i>
+                                    <span class="font-weight-bold text-primary">{{ event.get_number_of_attendees }}</span>
+                                    <span class="text-muted ml-1">attending</span>
+                                </div>
+                            </div>
+                            <div class="col-4 text-right">
+                                <a href="{% url 'events:event-detail' event.id %}" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-arrow-right mr-1"></i>View
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-footer bg-transparent border-0 pt-0">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">
+                            <i class="fas fa-user-tie mr-1"></i>by {{ event.creator|capfirst }}
+                        </small>
+                        <div class="btn-group btn-group-sm" role="group">
+                            <button type="button" class="btn btn-outline-secondary">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary">
+                                <i class="fas fa-bookmark"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="card glass-card">
+                <div class="card-body text-center py-5">
+                    <i class="fas fa-calendar-times text-muted mb-4" style="font-size: 4rem;"></i>
+                    <h3 class="text-muted mb-3">No Events Found</h3>
+                    <p class="text-muted mb-4">
+                        Looks like there are no events scheduled right now. Why not create the first one?
+                    </p>
+                    <a href="{% url 'events:event-create' %}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-plus-circle mr-2"></i>Create Your First Event
+                    </a>
+                </div>
+            </div>
+        </div>
         {% endfor %}
+    </div>
 
+    <!-- Pagination (if needed) -->
+    {% if events.has_other_pages %}
+    <div class="row mt-5">
+        <div class="col-12">
+            <nav aria-label="Events pagination">
+                <ul class="pagination justify-content-center">
+                    {% if events.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ events.previous_page_number }}">
+                                <i class="fas fa-chevron-left"></i>
+                            </a>
+                        </li>
+                    {% endif %}
+                    
+                    {% for num in events.paginator.page_range %}
+                        {% if events.number == num %}
+                            <li class="page-item active">
+                                <span class="page-link">{{ num }}</span>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% if events.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ events.next_page_number }}">
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    {% endif %}
+</div>
 
-    {% endblock %}
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(45deg, var(--primary-color), #8b5cf6);
+    }
+    
+    .card-title a:hover {
+        color: var(--primary-color) !important;
+    }
+    
+    .pagination .page-link {
+        color: var(--primary-color);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        margin: 0 2px;
+        transition: all 0.3s ease;
+    }
+    
+    .pagination .page-link:hover {
+        background-color: var(--primary-color);
+        color: white;
+        transform: translateY(-2px);
+    }
+    
+    .pagination .page-item.active .page-link {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+    
+    .btn-group .btn {
+        border-radius: 8px;
+    }
+    
+    .btn-group .btn:first-child {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    
+    .btn-group .btn:last-child {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+</style>
+{% endblock %}
