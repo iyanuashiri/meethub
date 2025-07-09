@@ -24,7 +24,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'themeethub.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'meethub-8mla.onrender.com']
 
 INSTALLED_APPS = [
     'grappelli',
