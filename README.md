@@ -17,20 +17,27 @@ MeetHub is an open source event management system built with Python and Django w
 <details>
 <summary>Click to view screenshots</summary>
 
+### Landing Page
+![landing page](https://res.cloudinary.com/iyanuashiri/image/upload/v1752105312/MeetHub-Connect-Meet-Grow-07-10-2025_12_23_AM_zdofem.png)
+
 ### Explore Page
-![explore page](https://res.cloudinary.com/iyanuashiri/image/upload/v1526323111/Screenshot-2018-5-14_Find_Your_Events_6.png)
+![explore page](https://res.cloudinary.com/iyanuashiri/image/upload/v1752105309/Discover-Amazing-Events-MeetHub-07-10-2025_12_25_AM_xtot9e.png)
 
 ### Event Creation
-![create event](https://res.cloudinary.com/iyanuashiri/image/upload/v1526323111/Screenshot-2018-5-14_Find_Your_Events_5.png)
+![create event](https://res.cloudinary.com/iyanuashiri/image/upload/v1752105309/Create-Amazing-Event-MeetHub-07-10-2025_12_25_AM_gz7fik.png)
 
 ### Notifications
-![notifications](https://res.cloudinary.com/iyanuashiri/image/upload/v1526323232/Screenshot-2018-5-14_Find_Your_Events_1.png)
+![notifications](https://res.cloudinary.com/iyanuashiri/image/upload/v1752105309/MeetHub-Connect-Meet-Experience-07-10-2025_12_26_AM_vjrflb.png)
 
 ### User Profile
-![profile](https://res.cloudinary.com/iyanuashiri/image/upload/v1526323111/Screenshot-2018-5-14_Find_Your_Events_7.png)
+![profile](https://res.cloudinary.com/iyanuashiri/image/upload/v1752105310/MeetHub-Connect-Meet-Experience-07-10-2025_12_27_AM_hohgpo.png)
 
 ### Login Page
-![login](https://res.cloudinary.com/iyanuashiri/image/upload/v1526323111/Screenshot-2018-5-14_MeetHub.png)
+![login](https://res.cloudinary.com/iyanuashiri/image/upload/v1752105726/Sign-In-MeetHub-07-10-2025_01_01_AM_f5jvkb.png)
+
+### Signup Page
+![signup](https://res.cloudinary.com/iyanuashiri/image/upload/v1752105727/Join-MeetHub-Create-Your-Account-07-10-2025_01_01_AM_uwg9od.png)
+
 </details>
 
 ## Installation
