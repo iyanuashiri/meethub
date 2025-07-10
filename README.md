@@ -64,12 +64,20 @@ You can run MeetHub using `uv` (recommended for development) or Docker or virtua
 ## Installation
 
 ### Prerequisites
-- Python 3.12+
+- Python 3.10+
 - pip
-- virtualenv (recommended)
+- uv (recommended)
 
 
 ## Setup
+
+uv
+1. Clone the repository `git clone https://github.com/iyanuashiri/meethub.git`
+2. Sync the dependencies `uv sync`
+3. Run migrations `uv run python manage.py migrate`
+4. Run the server `uv run python manage.py runserver`
+5. Create a superuser (for admin access): `uv run python manage.py createsuperuser`
+
 
 virtual environment 
 1. Clone the repository `git clone https://github.com/iyanuashiri/meethub.git`
@@ -79,17 +87,11 @@ virtual environment
 5. Run the migrations `python manage.py migrate`
 6. Run the server `python manage.py runserver`
 
-uv
-1. Clone the repository `git clone https://github.com/iyanuashiri/meethub.git`
-2. `uv sync`
-3. `uv run python manage.py migrate`
-4. `uv run python manage.py runserver`
-5. Create a superuser (for admin access): `uv run python manage.py createsuperuser`
 
 docker
 1. Clone the repository `git clone https://github.com/iyanuashiri/meethub.git`
-2. `docker build -t meethub .`
-3. `docker run -p 8000:8000 --env-file .env meethub`
+2. Build the image `docker build -t meethub .`
+3. Run the container `docker run -p 8000:8000 --env-file .env meethub`
 4. Create a superuser (for admin access): `docker exec -it meethub python manage.py createsuperuser`
 5. The app will be available at http://localhost:8000. The entrypoint script will automatically run migrations.
 
