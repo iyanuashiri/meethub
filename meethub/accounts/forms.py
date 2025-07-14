@@ -24,6 +24,14 @@ class SignUpForm(UserCreationForm):
             'password1': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
+    # This Validates that the provided email does not already exist.
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        print("clean_email called with:", email) 
+        if Account.objects.filter(email=email).exists():
+            raise forms.ValidationError("An account with this email already exists.")
+        return email
+
     # This is an override of the save() method. It attaches a profile to a user when they register
     def save(self, commit=True):
         user = super().save(commit=False)
